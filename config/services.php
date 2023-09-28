@@ -42,7 +42,8 @@ return [
     'tnv' => [
         'client_id' => env('TNV_CLIENT_ID'),
         'client_secret' => env('TNV_CLIENT_SECRET'),
-        'redirect' => env('TNV_CALLBACK_URL'),
+        'redirect_uri' => env('TNV_CALLBACK_URL'),
+        'api_url' => env('TNV_API_URL')
     ],
 
 ];

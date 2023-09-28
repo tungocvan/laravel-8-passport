@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -14,21 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
-Route::post('/email', function (Request $request) {    
-    $options = $request->all();    
-    $status = send_mail($options);
-    return [
-        'status' => $status
-    ];
-});
-Route::post('/upload-file', function (Request $request) {    
-    //dd($request->all());    
-    if($request->hasFile('file')) {
-        return back()->with('success', 'File uploaded successfully');
-    }
-    return back()->with('error', 'File upload failed');
-});
+
+
+

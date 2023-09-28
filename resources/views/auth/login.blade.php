@@ -1,5 +1,18 @@
 @extends('layouts.app')
+@php
+  $options = [
+    'email' => [
+        'name' => 'username',
+        'title' => 'Tên Đăng Nhập'
+    ],
+    'password' => [
+        'name' => 'password',
+        'title' => 'Mật khẩu',
+        'type' => 'password'
+    ],
+];  
 
+@endphp
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -15,33 +28,10 @@
                                 <strong>Đã có lỗi xãy ra. Vui lòng kiểm tra dữ liệu phía dưới.</strong>
                             </div>
                         @endif
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Tên Đăng Nhập') }}</label>
+          
+                        <x-input-text :options="$options['email']"/>
+                        <x-input-text :options="$options['password']"/>
 
-                            <div class="col-md-6">
-                                <input id="email" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}"  autofocus>
-
-                                @error('username')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Mật khẩu') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" >
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
 
                         <div class="row mb-3">
                             <div class="col-md-6 offset-md-4">
