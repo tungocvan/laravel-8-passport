@@ -88,6 +88,7 @@ class LoginController extends Controller
     {
         $userGoogle = Socialite::driver('google')->user();        
         $user  = User::where('email', $userGoogle->getEmail())->first();
+        
         if(!$user){                     
             $user = new User();
             $user->name = $userGoogle->getName();
@@ -98,6 +99,8 @@ class LoginController extends Controller
             $user->group_id = 1;
             $user->username =$user->email;
             $user->status = 0;
+            $avatar = $userGoogle->avatar ?? '';
+            $user->avatar = $avatar;
             $user->save();            
         }
         $status =$user->status;
@@ -122,8 +125,7 @@ class LoginController extends Controller
     public function facebookCallback()
     {
         $userFacebook = Socialite::driver('facebook')->user();
-        $user  = User::where('email', $userFacebook->getEmail())->first();
-        //dd($user);            
+        $user  = User::where('email', $userFacebook->getEmail())->first();                
         if (!$user) {            
             $user = new User();
             $user->name = $userFacebook->getName();
@@ -133,6 +135,8 @@ class LoginController extends Controller
             $user->password = Hash::make(rand());
             $user->group_id = 1;
             $user->username =$user->email;
+            $avatar = $userFacebook->avatar ?? '';
+            $user->avatar = $avatar;
             $user->save();
         }
         $status =$user->status;
@@ -147,7 +151,7 @@ class LoginController extends Controller
         // https://oauth.zaloapp.com/v4/permission?app_id=<APP_ID>&redirect_uri=<CALLBACK_URL>&code_challenge=<CODE_CHALLENGE>&state=<STATE>
         // https://oauth.zaloapp.com/v4/permission?app_id=3600784541564399611&code_challenge=MfCCb1qkUzL_H9TgLNQTi0XsJvOFtFrPp_EXFGe_t04&state=RfaNFQbN5YMDAkuv7mdMdmavXATMgvWqoer11Ei2
         $app_id= config('services.zalo.client_id');
-        $redirect_uri= url(config('services.zalo.redirect'));
+        $redirect_uri= url(config('services.zalo.redirect_uri'));
         $codeVerifier = bin2hex(random_bytes(64));
         $request->session()->put('codeVerifier', $codeVerifier);
         $codeChallenge = $this->base64UrlEncode(hash('sha256', $codeVerifier, true));
@@ -165,10 +169,10 @@ class LoginController extends Controller
     public function handleZaloCallback(Request $request)
     {
         
-
+        
         $app_id= config('services.zalo.client_id');
         $client_secret= config('services.zalo.client_secret');
-        $redirect_uri= url(config('services.zalo.redirect'));
+        $redirect_uri= url(config('services.zalo.redirect_uri'));
         $code = $request->code;
         $codeVerifier = $request->session()->pull('codeVerifier');
         $apiUrl = config('services.zalo.api_url');
@@ -189,8 +193,7 @@ class LoginController extends Controller
                 'access_token' => $accessToken,
             ])->get('https://graph.zalo.me/v2.0/me?fields=id,name,picture');               
                    
-            $userData = json_decode($response->getBody(), true);  
-          
+            $userData = json_decode($response->getBody(), true);                
             $user  = User::where('provider_id', $userData['id'])->first();
             if (!$user) {            
                 $user = new User();
@@ -200,7 +203,7 @@ class LoginController extends Controller
                 $user->provider = 'zalo';
                 $user->password = Hash::make(rand());
                 $user->group_id = 1;
-                $avartar = $userData['picture']['data']['url'] ?? '';
+                $avatar = $userData['picture']['data']['url'] ?? '';
                 $user->avatar = $avatar;
                 $user->username =$userData['id'];
                 $user->save();

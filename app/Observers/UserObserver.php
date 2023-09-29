@@ -15,7 +15,7 @@ class UserObserver
     public function creating(User $user)
     {
         //
-        echo 'creating -UserObserver';
+        //echo 'creating -UserObserver';
         //file_put_contents(base_path().'/logs.txt',$user->email);
         
         
@@ -23,7 +23,7 @@ class UserObserver
     public function created(User $user)
     {
         //
-        echo 'created-UserObserver ';
+        //echo 'created-UserObserver ';
         //file_put_contents(base_path().'/logs.txt',$user->email.'-'.'created');
         
     }
@@ -37,7 +37,7 @@ class UserObserver
     public function updated(User $user)
     {
         //
-        echo 'updated-UserObserver';
+        //echo 'updated-UserObserver';
     }
 
     /**
@@ -49,7 +49,7 @@ class UserObserver
     public function deleted(User $user)
     {
         //
-        echo 'deleted-UserObserver';
+        // echo 'deleted-UserObserver';
     }
 
     /**
@@ -61,7 +61,7 @@ class UserObserver
     public function restored(User $user)
     {
         //
-        echo 'restored-UserObserver';
+        // echo 'restored-UserObserver';
     }
 
     /**
@@ -73,6 +73,6 @@ class UserObserver
     public function forceDeleted(User $user)
     {
         //
-        echo 'forceDeleted-UserObserver';
+        // echo 'forceDeleted-UserObserver';
     }
 }

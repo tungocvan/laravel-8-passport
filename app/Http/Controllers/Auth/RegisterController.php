@@ -77,11 +77,13 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $slice = Str::beforeLast($data['email'], '@');        
-        $username = $data['username'] ?? $slice;        
+        $username = $data['username'] ?? $slice;  
+        $avatar = $data['avatar'] ?? env('AVATAR_USER');      
         $user = User::create([
             'name' => $data['name'],
             'username' => $username,
             'email' => $data['email'],
+            'avatar' => $avatar,
             'password' => Hash::make($data['password']),
         ]);
         // ProcessPodcast::dispatch($user)->delay(now()->addMinutes(1));
