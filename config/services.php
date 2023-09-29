@@ -48,7 +48,7 @@ return [
     'zalo' => [
         'client_id' => env('ZALO_CLIENT_ID'),
         'client_secret' => env('ZALO_CLIENT_SECRET'),
-        'redirect' => env('ZALO_REDIRECT'),
+        'redirect_uri' => env('ZALO_REDIRECT'),
     ],
     
 ];

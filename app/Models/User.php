@@ -27,7 +27,8 @@ class User extends Authenticatable
         'provider_id',
         'provider',
         'group_id',
-        'status'
+        'status',
+        'avatar'
     ];
     /**
      * The attributes that should be hidden for serialization.

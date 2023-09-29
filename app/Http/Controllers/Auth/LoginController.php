@@ -12,6 +12,7 @@ use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Http;
 class LoginController extends Controller
 {
     /*
@@ -144,36 +145,78 @@ class LoginController extends Controller
     public function redirectToZalo(Request $request)
     {
         // https://oauth.zaloapp.com/v4/permission?app_id=<APP_ID>&redirect_uri=<CALLBACK_URL>&code_challenge=<CODE_CHALLENGE>&state=<STATE>
-        
+        // https://oauth.zaloapp.com/v4/permission?app_id=3600784541564399611&code_challenge=MfCCb1qkUzL_H9TgLNQTi0XsJvOFtFrPp_EXFGe_t04&state=RfaNFQbN5YMDAkuv7mdMdmavXATMgvWqoer11Ei2
         $app_id= config('services.zalo.client_id');
-        $redirect_uri= config('services.zalo.redirect');
+        $redirect_uri= url(config('services.zalo.redirect'));
         $codeVerifier = bin2hex(random_bytes(64));
+        $request->session()->put('codeVerifier', $codeVerifier);
         $codeChallenge = $this->base64UrlEncode(hash('sha256', $codeVerifier, true));
-        $state = Str::random(40);
-        
+        $state = Str::random(40);        
         $query = http_build_query([
             'app_id' => $app_id,
             'redirect_uri' => $redirect_uri,
-            'code_challenge' => $codeChallenge,            
+            'code_challenge' => $codeChallenge,                        
             'state' => $state      
         ]);
-        //dd($query);
+        
         return redirect("https://oauth.zaloapp.com/v4/permission?".$query);
         
     }
     public function handleZaloCallback(Request $request)
     {
-        dd($request);
-        // $user = Socialite::driver('zalo')->user();
+        
 
-        // // Thực hiện xử lý với thông tin người dùng ở đây
-        // dd($user);
+        $app_id= config('services.zalo.client_id');
+        $client_secret= config('services.zalo.client_secret');
+        $redirect_uri= url(config('services.zalo.redirect'));
+        $code = $request->code;
+        $codeVerifier = $request->session()->pull('codeVerifier');
+        $apiUrl = config('services.zalo.api_url');
+        $response = Http::asForm()->withHeaders([
+                "Content-Type" => "application/x-www-form-urlencoded",   
+                'secret_key' => $client_secret,
+            ])->post('https://oauth.zaloapp.com/v4/access_token', [
+                        'code' => $code,
+                        'app_id' => $app_id,  
+                        'grant_type' => 'authorization_code',                        
+                        'code_verifier' => $codeVerifier
+            ]);
+        $response = $response->json();      
+        
+        if(!empty($response['access_token'])){
+            $accessToken = $response['access_token'];      
+            $response = Http::withHeaders([
+                'access_token' => $accessToken,
+            ])->get('https://graph.zalo.me/v2.0/me?fields=id,name,picture');               
+                   
+            $userData = json_decode($response->getBody(), true);  
+          
+            $user  = User::where('provider_id', $userData['id'])->first();
+            if (!$user) {            
+                $user = new User();
+                $user->name = $userData['name'];
+                $user->email = $userData['id']."@gmail.com";
+                $user->provider_id = $userData['id'];
+                $user->provider = 'zalo';
+                $user->password = Hash::make(rand());
+                $user->group_id = 1;
+                $avartar = $userData['picture']['data']['url'] ?? '';
+                $user->avatar = $avatar;
+                $user->username =$userData['id'];
+                $user->save();
+            }
+            $userId = $user->id;
+            Auth::loginUsingId($userId);
+            return redirect($this->redirectTo);    
+            //return redirect('/');
+        }
+        //dd($response->json());
+        
     }
     function base64UrlEncode($data)
     {
         return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
     }
-
 
 }
  
