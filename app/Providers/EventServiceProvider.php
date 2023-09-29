@@ -29,6 +29,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],   
+        \SocialiteProviders\Manager\SocialiteWasCalled::class => [            
+            \SocialiteProviders\Zalo\ZaloExtendSocialite::class.'@handle',
+        ],
         // "App\Events\UserUpdateEvent" => [
         //     "App\Listeners\UserUpdateListener"
         // ]  

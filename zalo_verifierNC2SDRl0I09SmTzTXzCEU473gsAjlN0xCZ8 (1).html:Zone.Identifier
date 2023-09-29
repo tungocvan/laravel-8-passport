@@ -1,0 +1,4 @@
+[ZoneTransfer]
+ZoneId=3
+ReferrerUrl=https://developers.zalo.me/app/3600784541564399611/verify-domain
+HostUrl=https://developers.zalo.me/api/apps/downloadZPSiteVerification?appId=3600784541564399611

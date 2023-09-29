@@ -16,7 +16,9 @@
         "laravel/ui": "^3.4",
         "luigel/laravel-passport-views": "^0.0.1",
         "maatwebsite/excel": "^3.1",
-        "unisharp/laravel-filemanager": "^2.6"
+        "socialiteproviders/zalo": "^5.0",
+        "unisharp/laravel-filemanager": "^2.6",
+        "zaloplatform/zalo-php-sdk": "^4.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

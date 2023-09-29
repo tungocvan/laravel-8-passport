@@ -5,6 +5,7 @@
  use App\Http\Controllers\Auth\LoginController;
  use Luigel\LaravelPassportViews\Http\Controllers\ClientController;
  
+ 
  Route::middleware(['web'])->prefix('/')->group(function(){
     Auth::routes();
     Route::get('/socialite', [SocialiteController::class, 'index'])->name('index');    
@@ -62,6 +63,9 @@
     //     }    
     // });
     
+    Route::get('auth/zalo',[LoginController::class, 'redirectToZalo'])->name('auth.zalo');
+    Route::get('auth/zalo/callback',[LoginController::class, 'handleZaloCallback']);
+
 });
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {

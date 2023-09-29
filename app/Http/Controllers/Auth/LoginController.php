@@ -12,7 +12,6 @@ use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Str;
-
 class LoginController extends Controller
 {
     /*
@@ -141,6 +140,40 @@ class LoginController extends Controller
         Auth::loginUsingId($userId);
         return redirect($this->redirectTo);
     }
+
+    public function redirectToZalo(Request $request)
+    {
+        // https://oauth.zaloapp.com/v4/permission?app_id=<APP_ID>&redirect_uri=<CALLBACK_URL>&code_challenge=<CODE_CHALLENGE>&state=<STATE>
+        
+        $app_id= config('services.zalo.client_id');
+        $redirect_uri= config('services.zalo.redirect');
+        $codeVerifier = bin2hex(random_bytes(64));
+        $codeChallenge = $this->base64UrlEncode(hash('sha256', $codeVerifier, true));
+        $state = Str::random(40);
+        
+        $query = http_build_query([
+            'app_id' => $app_id,
+            'redirect_uri' => $redirect_uri,
+            'code_challenge' => $codeChallenge,            
+            'state' => $state      
+        ]);
+        //dd($query);
+        return redirect("https://oauth.zaloapp.com/v4/permission?".$query);
+        
+    }
+    public function handleZaloCallback(Request $request)
+    {
+        dd($request);
+        // $user = Socialite::driver('zalo')->user();
+
+        // // Thực hiện xử lý với thông tin người dùng ở đây
+        // dd($user);
+    }
+    function base64UrlEncode($data)
+    {
+        return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
+    }
+
 
 }
  

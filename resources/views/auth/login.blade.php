@@ -62,6 +62,7 @@
                         <div class="col-md-8 offset-md-4 mt-5">       
                             <a href="{{route('auth.facebook')}}" class="btn btn-primary mr-5">Login With Facebook</a>                       
                             <a href="{{route('auth.google')}}" class="btn btn-primary">Login With Google</a>
+                            <a href="{{route('auth.zalo')}}" class="btn btn-primary">Zalo</a>
                         </div>
 
                     </form>
