@@ -1,0 +1,21 @@
+<?php
+
+namespace Modules\{module}\Http\Controllers\api;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Modules\{module}\Models\{module};
+
+class {module}Controller extends Controller
+{  
+    public function __construct()
+    {
+       // $this->middleware("auth");
+    }
+    public function index()    {
+        
+        return [
+            'status' => 200
+        ];
+    }
+}

@@ -80,3 +80,61 @@ function getEnvToArray($file){
     }
     return null;
 }
+
+function isRole($dataArr,$moduleName,$role='view')
+{
+    if(!empty($dataArr[$moduleName])){
+        $roleArr = $dataArr[$moduleName];
+        if(!empty($roleArr) && in_array($role,$roleArr)){
+            return true;
+        }
+    }
+    return false;
+}
+
+function checkPermissions($user,$moduleName,$role)
+{
+    $roleJson = $user->group->permissions;
+        if(!empty($roleJson)){
+            $roleArr = json_decode($roleJson,true);
+            $check = isRole($roleArr,$moduleName,$role);
+            return $check;
+        }
+        
+    return false;
+}
+
+function has_child($data,$id){
+    foreach ($data as $v) {
+        if($v['parent_id'] == $id){
+            return true;
+        }
+    }
+    return false;
+}
+
+function render_menu($options){
+
+    $data = $options['data'] ?? [];
+    $parent_id = $options['parent_id'] ?? 0;
+    $level = $options['level'] ?? 0;
+    $idMenu = $options['id'] ?? 'main_menu';
+    $classMenu = $options['class'] ?? '';
+    if($classMenu !== '') $classMenu="class='$classMenu'";
+    if($level == 0) $result = "<ul id='$idMenu' $classMenu  >";
+    else $result = "<ul id='sub-menu'>";
+
+    foreach ($data as $key => $v) {
+        if($v['parent_id'] == $parent_id){            
+            $result .= "<li>";
+            $result .= "<a href='{$v['url']}'>{$v['name']}</a>";
+            if(has_child($data,$v['id'])){
+                unset($data[$key]); 
+                $result .= render_menu(['data' => $data,'parent_id' => $v['id'],'level' => $level+1]);
+            }
+            $result .= "</li>";
+        }
+    }
+    $result .= "</ul>";
+    return $result;
+}

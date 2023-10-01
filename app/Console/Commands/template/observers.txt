@@ -1,0 +1,15 @@
+<?php
+namespace Modules\{module}\Observers;
+use Modules\{module}\Models\{module};
+class {module}Observer
+{
+
+    public function creating({module} $data)
+    {
+        // echo 'creating';
+    }
+    public function created({module} $data)
+    {
+        // echo 'created';
+    }
+}

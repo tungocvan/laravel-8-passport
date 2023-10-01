@@ -51,6 +51,10 @@ class Module extends Command
                     'name' => strtolower($name),                    
                     'module' => null
                 ]);
+                Artisan::call('module:repositories', [
+                    'module' => strtolower($name),
+                    '--delete' => true
+                ]);
                 $this->info('Module delete success');
             }
         }else{
@@ -77,6 +81,7 @@ class Module extends Command
                     $name.'/Models',
                     $name.'/Observers',
                     $name.'/Providers',
+                    $name.'/Repositories',
                     $name.'/Resources',
                     $name.'/Resources/assets',
                     $name.'/Resources/lang',
@@ -105,6 +110,9 @@ class Module extends Command
                 ]);
                 Artisan::call('module:make-routes', [
                     'name' => strtolower($name),
+                ]);
+                Artisan::call('module:repositories', [
+                    'module' => strtolower($name),
                 ]);
                 
                 $viewPath = base_path("app/Console/Commands/template");

@@ -1,0 +1,12 @@
+<?php
+namespace Modules\{module}\Http\Middleware;
+use Closure;
+use Illuminate\Http\Request;
+class {module}
+{
+    public function handle(Request $request, Closure $next)
+    {
+        echo "<h2>middleware {module}</h2>";
+        return $next($request);
+    }
+}

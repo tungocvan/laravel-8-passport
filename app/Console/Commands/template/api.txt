@@ -1,0 +1,8 @@
+<?php 
+ use Illuminate\Support\Facades\Route;
+ use Modules\{module}\Http\Controllers\api\{module}Controller;
+ Route::middleware(['api'])->prefix('/api/{moduleName}')->name('api.{moduleName}.')->group(function(){
+     Route::get('/', [{module}Controller::class, 'index'])->name('index');
+});
+ 
+  
