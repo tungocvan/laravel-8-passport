@@ -47,10 +47,10 @@ class Repositories extends Command
         $servicePath = app_path('Providers/AppServiceProvider.php'); 
         $contentService = file_get_contents($servicePath);
         $contains = Str::contains($contentService, 'app->singleton');
-        if($option === true){
-            $newContent = "App\Repositories\\$module\\$module"."RepositoryInterface::class,";
-            $content = preg_replace('/^.*' . preg_quote($newContent, '/') . '.*\n?/m', '', $contentService);
-            $newContent = "\App\Repositories\\$module\\$module"."Repository::class,";
+        if($option === true){            
+            $newContent = "\Modules\\$module\Repositories\\$module"."RepositoryInterface::class,";
+            $content = preg_replace('/^.*' . preg_quote($newContent, '/') . '.*\n?/m', '', $contentService);            
+            $newContent = "\Modules\\$module\\Repositories\\$module"."Repository::class,";
             $content = preg_replace('/^.*' . preg_quote($newContent, '/') . '.*\n?/m', '', $content);
             file_put_contents($servicePath, $content);
             if (File::exists($newRepositoriesInterface)) {
@@ -84,9 +84,9 @@ class Repositories extends Command
                          
                 
                 if($contains){                    
-                   $newContent = "//singleton\n\t\t\App\Repositories\\$module\\$module"."RepositoryInterface::class,\n\t\t\App\Repositories\\$module\\$module"."Repository::class,";                   
+                   $newContent = "//singleton\n\t\t\Modules\\$module\Repositories\\$module"."RepositoryInterface::class,\n\t\t\Modules\\$module\Repositories\\$module"."Repository::class,";                   
                 }else{                   
-                   $newContent = "\$this->app->singleton(\n\t\t'','',\n\t\t//singleton\n\t\t\App\Repositories\Product\ProductRepositoryInterface::class,\n\t\t\App\Repositories\Product\ProductRepository::class,\n\t\t);";
+                   $newContent = "\$this->app->singleton(\n\t\t//singleton\n\t\t\Modules\\$module\Repositories\\$module"."RepositoryInterface::class,\n\t\t\Modules\\$module\Repositories\\$module"."Repository::class,\n\t\t);";
                 }
                 $content = str_replace('//singleton',$newContent, $contentService);
                 file_put_contents($servicePath, $content);

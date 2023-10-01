@@ -5,15 +5,19 @@ namespace Modules\{module}\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Modules\{module}\Models\{module};
+use Modules\{module}\Repositories\{module}RepositoryInterface;
 
 class {module}Controller extends Controller
 {  
-    public function __construct()
+    protected ${module}Repo;
+    public function __construct({module}RepositoryInterface ${module}Repo)
     {
        // $this->middleware("auth");
+       $this->{module}Repo = ${module}Repo;
     }
     public function index()
     {
+        // ${module}=$this->{module}Repo->getAll();
         $title='{module} View index.blade.php';
         return view('{module}::index',compact('title'));
     }

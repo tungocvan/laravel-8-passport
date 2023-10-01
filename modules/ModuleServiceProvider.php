@@ -10,6 +10,8 @@ class ModuleServiceProvider extends ServiceProvider
     }
     private $middlewares = [
         //add middleware
+        'users.middleware' => \Modules\Users\Http\Middleware\Users::class,
+        'product.middleware' => \Modules\Product\Http\Middleware\Product::class,
         'upload.middleware' => \Modules\Upload\Http\Middleware\Upload::class,
         'email.middleware' => \Modules\Email\Http\Middleware\Email::class,
         'socialite.middleware' => \Modules\Socialite\Http\Middleware\Socialite::class,

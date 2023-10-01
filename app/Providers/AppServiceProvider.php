@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Providers;
-use App\View\Components\InputFile;
-use App\View\Components\InputDate;
-use App\View\Components\InputText;
 use App\View\Components\editor;
+use App\View\Components\InputDate;
+use App\View\Components\InputFile;
+use App\View\Components\InputText;
 use App\View\Components\UploadFile;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -18,9 +18,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-       $this->app->singleton(
-		'','',
+       $this->app->singleton(		
 		//singleton
+		\Modules\Users\Repositories\UsersRepositoryInterface::class,
+		\Modules\Users\Repositories\UsersRepository::class,
+		\Modules\Product\Repositories\ProductRepositoryInterface::class,
+		\Modules\Product\Repositories\ProductRepository::class,
 		);
     }
 

@@ -1,5 +1,9 @@
 <?php
 namespace App\Providers;
+use Modules\Users\Models\Users;
+use Modules\Users\Observers\UsersObserver;
+use Modules\Product\Models\Product;
+use Modules\Product\Observers\ProductObserver;
 use Modules\Upload\Models\Upload;
 use Modules\Upload\Observers\UploadObserver;
 use Modules\Email\Models\Email;
@@ -45,12 +49,14 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         //observe
+		Users::observe(new UsersObserver);
+		Product::observe(new ProductObserver);
 		Upload::observe(new UploadObserver);
 		Email::observe(new EmailObserver);
 		Socialite::observe(new SocialiteObserver);
 		Sanctum::observe(new SanctumObserver);
 		Post::observe(new PostObserver);
-        User::observe(new UserObserver);        
+        
     }
 
     protected $subscribe = [
