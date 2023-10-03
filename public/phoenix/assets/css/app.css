@@ -1,0 +1,12 @@
+.footer-border-right{
+    border-right: #ccc 1px solid;
+}
+
+.user-avatar-l{
+    display: flex;
+    align-items:center;
+}
+
+#top .navbar-sidebar{
+    margin-top: 2px;
+}

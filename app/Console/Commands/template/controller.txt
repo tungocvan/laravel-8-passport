@@ -6,18 +6,21 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Modules\{module}\Models\{module};
 use Modules\{module}\Repositories\{module}RepositoryInterface;
-
+// use Modules\{module}\Repositories\{module}Repository;
 class {module}Controller extends Controller
 {  
     protected ${module}Repo;
     public function __construct({module}RepositoryInterface ${module}Repo)
     {
-       // $this->middleware("auth");
+       // $this->middleware("auth");       
        $this->{module}Repo = ${module}Repo;
     }
     public function index()
     {
         // ${module}=$this->{module}Repo->getAll();
+        // or user {module}Repository
+        // ${module} = new {module}Repository();
+        
         $title='{module} View index.blade.php';
         return view('{module}::index',compact('title'));
     }

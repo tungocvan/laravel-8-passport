@@ -1,9 +1,13 @@
 <?php
 namespace App\Providers;
-use Modules\Users\Models\Users;
-use Modules\Users\Observers\UsersObserver;
 use Modules\Product\Models\Product;
 use Modules\Product\Observers\ProductObserver;
+use Modules\Post\Models\Post;
+use Modules\Post\Observers\PostObserver;
+use Modules\Admin\Models\Admin;
+use Modules\Admin\Observers\AdminObserver;
+use Modules\Users\Models\Users;
+use Modules\Users\Observers\UsersObserver;
 use Modules\Upload\Models\Upload;
 use Modules\Upload\Observers\UploadObserver;
 use Modules\Email\Models\Email;
@@ -12,8 +16,6 @@ use Modules\Socialite\Models\Socialite;
 use Modules\Socialite\Observers\SocialiteObserver;
 use Modules\Sanctum\Models\Sanctum;
 use Modules\Sanctum\Observers\SanctumObserver;
-use Modules\Post\Models\Post;
-use Modules\Post\Observers\PostObserver;
 use App\Models\User;
 use App\Observers\UserObserver;
 use Illuminate\Support\Facades\Event;
@@ -49,13 +51,14 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         //observe
-		Users::observe(new UsersObserver);
 		Product::observe(new ProductObserver);
+		Post::observe(new PostObserver);
+		Admin::observe(new AdminObserver);
+		Users::observe(new UsersObserver);
 		Upload::observe(new UploadObserver);
 		Email::observe(new EmailObserver);
 		Socialite::observe(new SocialiteObserver);
 		Sanctum::observe(new SanctumObserver);
-		Post::observe(new PostObserver);
         
     }
 

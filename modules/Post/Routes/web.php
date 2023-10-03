@@ -1,8 +1,11 @@
 <?php 
  use Illuminate\Support\Facades\Route;
  use Modules\Post\Http\Controllers\PostController;
- Route::middleware(['web','post.middleware'])->prefix('/post')->name('post.')->group(function(){
+ Route::middleware(['web','auth'])->prefix('/post')->name('post.')->group(function(){
      Route::get('/', [PostController::class, 'index'])->name('index');
+     Route::get('/add', [PostController::class, 'add'])->name('add');
+     Route::get('/category', [PostController::class, 'category'])->name('category');
+     Route::get('/tags', [PostController::class, 'tags'])->name('tags');
 });
 
  

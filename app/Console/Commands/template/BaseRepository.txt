@@ -12,6 +12,6 @@ class {module}Repository extends BaseRepository implements {module}RepositoryInt
     }
     public function get{module}()
     {
-        return $this->model->getAll();
+        return $this->model->all();
     }
 }

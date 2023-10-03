@@ -10,13 +10,14 @@ class ModuleServiceProvider extends ServiceProvider
     }
     private $middlewares = [
         //add middleware
-        'users.middleware' => \Modules\Users\Http\Middleware\Users::class,
         'product.middleware' => \Modules\Product\Http\Middleware\Product::class,
+        'post.middleware' => \Modules\Post\Http\Middleware\Post::class,
+        'admin.middleware' => \Modules\Admin\Http\Middleware\Admin::class,
+        'users.middleware' => \Modules\Users\Http\Middleware\Users::class,
         'upload.middleware' => \Modules\Upload\Http\Middleware\Upload::class,
         'email.middleware' => \Modules\Email\Http\Middleware\Email::class,
         'socialite.middleware' => \Modules\Socialite\Http\Middleware\Socialite::class,
         'sanctum.middleware' => \Modules\Sanctum\Http\Middleware\Sanctum::class,
-        'post.middleware' => \Modules\Post\Http\Middleware\Post::class,
         'env.middleware' => \Modules\Env\Http\Middleware\Env::class
     ];
     private $commands = [

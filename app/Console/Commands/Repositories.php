@@ -46,9 +46,9 @@ class Repositories extends Command
         $newRepositoriesBase = $pathRepositories . '/' . $module."Repository.php";
         $servicePath = app_path('Providers/AppServiceProvider.php'); 
         $contentService = file_get_contents($servicePath);
-        $contains = Str::contains($contentService, 'app->singleton');
-        if($option === true){            
-            $newContent = "\Modules\\$module\Repositories\\$module"."RepositoryInterface::class,";
+        //$contains = Str::contains($contentService, 'app->singleton');
+        if($option === true){                        
+            $newContent = "\$this->app->singleton(\n\t\t\Modules\\$module\Repositories\\$module"."RepositoryInterface::class,\n\t\t\Modules\\$module\Repositories\\$module"."Repository::class,\n\t\t);";
             $content = preg_replace('/^.*' . preg_quote($newContent, '/') . '.*\n?/m', '', $contentService);            
             $newContent = "\Modules\\$module\\Repositories\\$module"."Repository::class,";
             $content = preg_replace('/^.*' . preg_quote($newContent, '/') . '.*\n?/m', '', $content);
@@ -64,7 +64,7 @@ class Repositories extends Command
 
         if (!File::exists($pathModule)) {
             $this->error('Module chua ton tai');
-        } else {
+        } else { 
             
             if (!File::exists($pathRepositories)) {
                 File::makeDirectory($pathRepositories, 0755, true, true);
@@ -81,13 +81,7 @@ class Repositories extends Command
                 $content = file_get_contents($template);
                 $newContent = str_replace('{module}',$module, $content);               
                 file_put_contents($newRepositoriesBase, $newContent);
-                         
-                
-                if($contains){                    
-                   $newContent = "//singleton\n\t\t\Modules\\$module\Repositories\\$module"."RepositoryInterface::class,\n\t\t\Modules\\$module\Repositories\\$module"."Repository::class,";                   
-                }else{                   
-                   $newContent = "\$this->app->singleton(\n\t\t//singleton\n\t\t\Modules\\$module\Repositories\\$module"."RepositoryInterface::class,\n\t\t\Modules\\$module\Repositories\\$module"."Repository::class,\n\t\t);";
-                }
+                $newContent = "//singleton\n\t\$this->app->singleton(\n\t\t\Modules\\$module\Repositories\\$module"."RepositoryInterface::class,\n\t\t\Modules\\$module\Repositories\\$module"."Repository::class,\n\t\t);";                
                 $content = str_replace('//singleton',$newContent, $contentService);
                 file_put_contents($servicePath, $content);
                 return $this->info('Module Repositories success');

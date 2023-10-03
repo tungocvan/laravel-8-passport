@@ -12,6 +12,6 @@ class UsersRepository extends BaseRepository implements UsersRepositoryInterface
     }
     public function getUsers()
     {
-        return $this->model->getAll();
+        return $this->model->all();
     }
 }
