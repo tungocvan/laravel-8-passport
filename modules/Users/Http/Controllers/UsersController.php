@@ -17,14 +17,19 @@ class UsersController extends Controller
     }
     public function index()
     {
-        // $Users=$this->UsersRepo->getAll();
+        //$Users=$this->UsersRepo->getAll();        
         // or user UsersRepository
-       //$Users = new UsersRepository(); 
-        //dd($Users->getUsers());
-        return getUrlView('users');
+       $Users = new UsersRepository();        
+       //dd($Users->getUsers());
+        return getUrlView('users',$Users->getPaginate(5));
     }
     public function add()
     {    
+        return getUrlView('users/add');    
+    }
+    public function postAdd(Request $request)
+    {    
+        dd($request);
         return getUrlView('users/add');    
     }
     public function profile()

@@ -1,39 +1,15 @@
 @php 
-    $sidebarPost = [
-        ['id' => 1,'title' => 'Bài viết', 'parent_id' => 0, 'href' => '#post' ,'iconClass' => 'svg-inline--fa fa-caret-right'],
-        ['id' => 2,'title' => 'Tất cả bài viết', 'parent_id' => 1, 'href' => '/post' ,'iconClass' => ''],
-        ['id' => 3,'title' => 'Viết bài mới', 'parent_id' => 1, 'href' => '/post/add' ,'iconClass' => ''],
-        ['id' => 4,'title' => 'Chuyên mục', 'parent_id' => 1, 'href' => '/post/category' ,'iconClass' => ''],
-        ['id' => 5,'title' => 'Thẻ', 'parent_id' => 1, 'href' => '/post/tags' ,'iconClass' => ''],
-    ];
-    $sidebarProduct = [
-        ['id' => 1,'title' => 'Sản phẩm', 'parent_id' => 0, 'href' => '#product' ,'iconClass' => 'svg-inline--fa fa-caret-right'],
-        ['id' => 2,'title' => 'Tất cả sản phẩm', 'parent_id' => 1, 'href' => '/product' ,'iconClass' => ''],
-        ['id' => 3,'title' => 'Thêm mới', 'parent_id' => 1, 'href' => '/product/add' ,'iconClass' => ''],
-        ['id' => 4,'title' => 'Danh mục', 'parent_id' => 1, 'href' => '/product/category' ,'iconClass' => ''],
-        ['id' => 5,'title' => 'Từ khóa', 'parent_id' => 1, 'href' => '/product/tags' ,'iconClass' => ''],
-        ['id' => 6,'title' => 'Các thuộc tính', 'parent_id' => 1, 'href' => '/product/attributes' ,'iconClass' => ''],
-    ];
-    $sidebarUser = [
-        ['id' => 1,'title' => 'Thành viên', 'parent_id' => 0, 'href' => '#users' ,'iconClass' => 'svg-inline--fa fa-caret-right'],
-        ['id' => 2,'title' => 'Tất cả người dùng', 'parent_id' => 1, 'href' => '/users' ,'iconClass' => ''],
-        ['id' => 3,'title' => 'Thêm mới', 'parent_id' => 1, 'href' => '/users/add' ,'iconClass' => ''],
-        ['id' => 4,'title' => 'Hồ sơ', 'parent_id' => 1, 'href' => '/users/profile' ,'iconClass' => ''],
-        ['id' => 5,'title' => 'Phân quyền', 'parent_id' => 1, 'href' => '/users/permission' ,'iconClass' => ''],
-    ];
-
-    
-
+    $menuSidebar = getMenuSidebar();
 @endphp
 <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
     <!-- scrollbar removed-->
     <div class="navbar-vertical-content">
         <ul class="navbar-nav flex-column" id="navbarVerticalNav">
             <li class="nav-item">
-                <p class="navbar-vertical-label">Apps</p>                 
-                 {!!render_menu_item($sidebarUser)!!}               
-                 {!!render_menu_item($sidebarPost)!!}               
-                 {!!render_menu_item($sidebarProduct)!!}               
+                <p class="navbar-vertical-label">Apps</p>        
+                 @foreach ($menuSidebar as $item)
+                    {!!render_menu_item($item)!!}   
+                 @endforeach                                        
             </li>
             <li class="nav-item">
                 <p class="navbar-vertical-label">Pages</p>

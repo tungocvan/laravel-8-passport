@@ -6,6 +6,7 @@ use App\View\Components\InputDate;
 use App\View\Components\InputFile;
 use App\View\Components\InputText;
 use App\View\Components\UploadFile;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -19,6 +20,14 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //singleton
+	$this->app->singleton(
+		\Modules\Groups\Repositories\GroupsRepositoryInterface::class,
+		\Modules\Groups\Repositories\GroupsRepository::class,
+		);
+	$this->app->singleton(
+		\Modules\Modules\Repositories\ModulesRepositoryInterface::class,
+		\Modules\Modules\Repositories\ModulesRepository::class,
+		);
 	$this->app->singleton(
 		\Modules\Product\Repositories\ProductRepositoryInterface::class,
 		\Modules\Product\Repositories\ProductRepository::class,
@@ -44,7 +53,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //boot 
+		Paginator::useBootstrap();
+		//boot 
 	Blade::component('input-file', InputFile::class); 
 	Blade::component('input-date', InputDate::class); 
 	Blade::component('input-text', InputText::class); 	

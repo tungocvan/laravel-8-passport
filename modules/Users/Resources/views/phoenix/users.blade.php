@@ -9,7 +9,7 @@
             @include("Admin::phoenix.parts.header")
         </nav>
         <div class="content" style="margin-left: 239px">           
-            @include("$module::phoenix.parts.$action-content")
+            @include("$module::phoenix.parts.$action-content",compact('data'))
             <footer class="footer position-absolute">
                 <div class="row g-0 justify-content-between align-items-center h-100">
                   <div class="col-12 col-sm-auto text-center">

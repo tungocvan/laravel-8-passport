@@ -14,4 +14,8 @@ class UsersRepository extends BaseRepository implements UsersRepositoryInterface
     {
         return $this->model->all();
     }
+    public function getPaginate($number)
+    {
+        return $this->model->paginate($number);
+    }
 }

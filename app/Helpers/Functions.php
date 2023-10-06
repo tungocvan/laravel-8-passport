@@ -143,6 +143,7 @@ function render_menu($options){
 function render_menu_item($options=null){        
     $titleActive = request()->getRequestUri();    
     $titleModule = $options[0]['title'];
+    $iconClass = $options[0]['iconClass'];
     $hrefModule = Str::after($options[0]['href'], '#') ;
     $moduleActive = Str::after($titleActive, '/') ;
     //dd($hrefModule.'-'.$moduleActive);
@@ -177,36 +178,24 @@ function render_menu_item($options=null){
         }
     }
     return "
-    <div class='nav-item-wrapper'>
-    <a class='nav-link dropdown-indicator label-1 $collapsed' href='/#$idMoudle' role='button' data-bs-toggle='collapse' aria-expanded='false' aria-controls='e-commerce'>
-        <div class='d-flex align-items-center'>
-            <div class='dropdown-indicator-icon'>
-                <svg class='svg-inline--fa fa-caret-right' aria-hidden='true' focusable='false' data-prefix='fas' data-icon='caret-right' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 512' data-fa-i2svg=''>
-                    <path
-                        fill='currentColor'
-                        d='M118.6 105.4l128 127.1C252.9 239.6 256 247.8 256 255.1s-3.125 16.38-9.375 22.63l-128 127.1c-9.156 9.156-22.91 11.9-34.88 6.943S64 396.9 64 383.1V128c0-12.94 7.781-24.62 19.75-29.58S109.5 96.23 118.6 105.4z'
-                    ></path>
-                </svg>
-                <!-- <span class='fas fa-caret-right'></span> Font Awesome fontawesome.com -->
+        <div class='nav-item-wrapper'>
+            <a class='nav-link dropdown-indicator label-1 $collapsed' href='/#$idMoudle' role='button' data-bs-toggle='collapse' aria-expanded='false' aria-controls='e-commerce'>
+                <div class='d-flex align-items-center'>
+                    <div class='dropdown-indicator-icon'>
+                        <span class='nav-link-icon text-danger fas fa-caret-right' style='height: 16px; width: 16px;color:#3e456b!important'></span>                           
+                    </div>                                 
+                    <span class='nav-link-icon text-danger $iconClass' style='height: 16px; width: 16px;color:#3e456b!important'></span>
+                    <span class='nav-link-text'>$titleModule</span>
+                </div>
+            </a>
+            <div class='parent-wrapper label-1'>
+                <ul class='nav parent collapsed $collapsedUl $show' data-bs-parent='#navbarVerticalCollapse' id='$idMoudle' style=''>
+                    <li class='collapsed-nav-item-title d-none'>$titleModule</li>                            
+                    $item                 
+                </ul>
             </div>
-            <span class='nav-link-icon'>
-                <svg xmlns='http://www.w3.org/2000/svg' width='16px' height='16px' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-shopping-cart'>
-                    <circle cx='9' cy='21' r='1'></circle>
-                    <circle cx='20' cy='21' r='1'></circle>
-                    <path d='M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6'></path>
-                </svg>
-            </span>
-            <span class='nav-link-text'>$titleModule</span>
         </div>
-    </a>
-    <div class='parent-wrapper label-1'>
-        <ul class='nav parent collapsed $collapsedUl $show' data-bs-parent='#navbarVerticalCollapse' id='$idMoudle' style=''>
-            <li class='collapsed-nav-item-title d-none'>$titleModule</li>                            
-            $item                 
-        </ul>
-    </div>
-</div>
-    ";
+         ";
 }
 
 function getUrlView($titleUrl,$data=[])
@@ -219,4 +208,32 @@ function getUrlView($titleUrl,$data=[])
         }
         return '';
         
- }
+    }
+
+function getMenuSidebar()
+{
+    return [
+        [
+            ['id' => 1,'title' => 'Bài viết', 'parent_id' => 0, 'href' => '#post' ,'iconClass' => 'far fa-list-alt'],
+            ['id' => 2,'title' => 'Tất cả bài viết', 'parent_id' => 1, 'href' => '/post' ,'iconClass' => ''],
+            ['id' => 3,'title' => 'Viết bài mới', 'parent_id' => 1, 'href' => '/post/add' ,'iconClass' => ''],
+            ['id' => 4,'title' => 'Chuyên mục', 'parent_id' => 1, 'href' => '/post/category' ,'iconClass' => ''],
+            ['id' => 5,'title' => 'Thẻ', 'parent_id' => 1, 'href' => '/post/tags' ,'iconClass' => ''],
+        ],
+        [
+            ['id' => 1,'title' => 'Sản phẩm', 'parent_id' => 0, 'href' => '#product' ,'iconClass' => 'fab fa-first-order'],
+            ['id' => 2,'title' => 'Tất cả sản phẩm', 'parent_id' => 1, 'href' => '/product' ,'iconClass' => ''],
+            ['id' => 3,'title' => 'Thêm mới', 'parent_id' => 1, 'href' => '/product/add' ,'iconClass' => ''],
+            ['id' => 4,'title' => 'Danh mục', 'parent_id' => 1, 'href' => '/product/category' ,'iconClass' => ''],
+            ['id' => 5,'title' => 'Từ khóa', 'parent_id' => 1, 'href' => '/product/tags' ,'iconClass' => ''],
+            ['id' => 6,'title' => 'Các thuộc tính', 'parent_id' => 1, 'href' => '/product/attributes' ,'iconClass' => ''],
+        ],
+        [
+            ['id' => 1,'title' => 'Thành viên', 'parent_id' => 0, 'href' => '#users' ,'iconClass' => 'far fa-user-circle'],
+            ['id' => 2,'title' => 'Tất cả người dùng', 'parent_id' => 1, 'href' => '/users' ,'iconClass' => ''],
+            ['id' => 3,'title' => 'Thêm mới', 'parent_id' => 1, 'href' => '/users/add' ,'iconClass' => ''],
+            ['id' => 4,'title' => 'Hồ sơ', 'parent_id' => 1, 'href' => '/users/profile' ,'iconClass' => ''],
+            ['id' => 5,'title' => 'Phân quyền', 'parent_id' => 1, 'href' => '/users/permission' ,'iconClass' => ''],
+        ],
+    ];
+}
