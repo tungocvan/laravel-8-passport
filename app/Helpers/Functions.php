@@ -233,7 +233,9 @@ function getMenuSidebar()
             ['id' => 2,'title' => 'Tất cả người dùng', 'parent_id' => 1, 'href' => '/users' ,'iconClass' => ''],
             ['id' => 3,'title' => 'Thêm mới', 'parent_id' => 1, 'href' => '/users/add' ,'iconClass' => ''],
             ['id' => 4,'title' => 'Hồ sơ', 'parent_id' => 1, 'href' => '/users/profile' ,'iconClass' => ''],
-            ['id' => 5,'title' => 'Phân quyền', 'parent_id' => 1, 'href' => '/users/permission' ,'iconClass' => ''],
+            ['id' => 5,'title' => 'Nhóm người dùng', 'parent_id' => 1, 'href' => '/groups' ,'iconClass' => ''],
+            ['id' => 6,'title' => 'Danh sách Modules', 'parent_id' => 1, 'href' => '/modules' ,'iconClass' => ''],
+            
         ],
     ];
 }

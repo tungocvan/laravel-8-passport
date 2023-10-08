@@ -2,8 +2,9 @@
 
 namespace Modules\Groups\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Groups extends Model
 {
@@ -15,4 +16,7 @@ class Groups extends Model
    //protected $timestamps = true;
    //const CREATED_AT ="created_at";
    //const UPDATED_AT ="updated_at";
+   public function users(){
+    return $this->hasMany(User::class);
+}
 }

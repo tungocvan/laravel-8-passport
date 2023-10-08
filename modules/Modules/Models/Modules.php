@@ -11,7 +11,7 @@ class Modules extends Model
    //protected $connection = 'wordpress';
    //protected $table = "";
    //protected $primaryKey = "id";
-   //protected $fillable = [];
+   protected $fillable = ['name','title'];
    //protected $timestamps = true;
    //const CREATED_AT ="created_at";
    //const UPDATED_AT ="updated_at";
