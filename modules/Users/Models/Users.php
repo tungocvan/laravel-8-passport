@@ -2,8 +2,9 @@
 
 namespace Modules\Users\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Groups\Models\Groups;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Users extends Model
 {
@@ -14,5 +15,5 @@ class Users extends Model
    //protected $fillable = [];
    //protected $timestamps = true;
    //const CREATED_AT ="created_at";
-   //const UPDATED_AT ="updated_at";
+   //const UPDATED_AT ="updated_at";  
 }

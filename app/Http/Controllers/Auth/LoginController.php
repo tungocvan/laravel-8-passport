@@ -69,8 +69,7 @@ class LoginController extends Controller
         }
         $dataArr = [
             $fieldb => $request->username,
-            'password' => $request->password,
-            'status' => 0
+            'password' => $request->password
         ];
         return $dataArr;
         //return $request->only($this->username(), 'password');

@@ -2,19 +2,18 @@
     //dd($data['data']['group']->name);
     $nameModule = $data['data']['group']->name ?? '';
     $modules = $data['data']['modules'];
+    $group = $data['data']['group'];
     $roleListArr = $data['data']['roleListArr'];
     $roleArr = $data['data']['roleArr'];
     
 @endphp
-<h2>USERS Permission CONTENT</h2>
 <h3>Phân quyền nhóm - {{ $nameModule}}</h3>
-<form method="POST">
+<form method="POST" action="{{route('groups.post-permission',$group)}}">
     <table class="table">
         <thead>
           <tr>  
-               <th>Modules</th>
-               <th>Quyền</th>
-               
+               <th width="15%">Modules</th>
+               <th>Quyền</th>               
           </tr>
         </thead>
         <tbody>
@@ -27,7 +26,7 @@
                     <div class="row">
                         @if (!empty($roleListArr))
                           @foreach ($roleListArr as $roleName => $roleLabel)
-                              <div class="col-3">
+                              <div class="col-2">
                                 <label for="role_{{$module->name}}_{{$roleName}}">
                                     <input type="checkbox" name="role[{{$module->name}}][]" id="role_{{$module->name}}_{{$roleName}}" value="{{$roleName}}"
                                     {{ isRole($roleArr,$module->name,$roleName) ? 'checked':false }}
@@ -38,7 +37,7 @@
                           @endforeach  
                         @endif
                         @if ($module->name == 'groups')
-                            <div class="col-6">
+                            <div class="col-3">
                                 <label for="role_{{$module->name}}_permission">
                                     <input type="checkbox" name="role[{{$module->name}}][]" id="role_{{$module->name}}_permission" value="permission" 
                                     {{ isRole($roleArr,$module->name,'permission') ? 'checked':false }}

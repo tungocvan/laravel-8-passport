@@ -38,7 +38,7 @@ class CreateDatabaseUser extends Command
      * Execute the console command.
      *
      * @return int
-     */
+     */ 
     public function handle()
     {
         $number = $this->argument('number');
@@ -53,8 +53,8 @@ class CreateDatabaseUser extends Command
                     'username' => $username,
                     'email' => $email,
                     'password' => Hash::make('123456'),
-                    'group_id' => 1,
-                    'user_id' => 0,
+                    'group_id' => rand(2, 4),
+                    'user_id' => 1,
                     'provider' =>'test',
                     'status' => rand(0, 1),
                     'avatar' => '/images/avatar.jpg',

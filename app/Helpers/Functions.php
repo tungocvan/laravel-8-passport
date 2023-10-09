@@ -1,5 +1,6 @@
 <?php 
 use Illuminate\Support\Str;
+use Modules\Groups\Models\Groups;
 use Illuminate\Support\Facades\Mail;
 // use File;
 function send_mail($options){        
@@ -203,11 +204,10 @@ function getUrlView($titleUrl,$data=[])
         if($titleUrl!==''){
             $title = Str::before($titleUrl, '/');
             $action = Str::after($titleUrl, '/');        
-            $module = ucfirst($title);
+            $module = ucfirst($title); 
             return view("$module::phoenix.phoenix",compact('title','module','action','data')); 
         }
-        return '';
-        
+        return '';        
     }
 
 function getMenuSidebar()
@@ -233,9 +233,15 @@ function getMenuSidebar()
             ['id' => 2,'title' => 'Tất cả người dùng', 'parent_id' => 1, 'href' => '/users' ,'iconClass' => ''],
             ['id' => 3,'title' => 'Thêm mới', 'parent_id' => 1, 'href' => '/users/add' ,'iconClass' => ''],
             ['id' => 4,'title' => 'Hồ sơ', 'parent_id' => 1, 'href' => '/users/profile' ,'iconClass' => ''],
-            ['id' => 5,'title' => 'Nhóm người dùng', 'parent_id' => 1, 'href' => '/groups' ,'iconClass' => ''],
-            ['id' => 6,'title' => 'Danh sách Modules', 'parent_id' => 1, 'href' => '/modules' ,'iconClass' => ''],
+            ['id' => 5,'title' => 'Nhóm người dùng', 'parent_id' => 1, 'href' => '/groups/users' ,'iconClass' => ''],
+            ['id' => 6,'title' => 'Danh sách Modules', 'parent_id' => 1, 'href' => '/modules/users' ,'iconClass' => ''],
             
         ],
     ];
+}
+
+function getGroupName($groupId){
+    
+    $groups = Groups::find($groupId);    
+    return $groups->name;
 }

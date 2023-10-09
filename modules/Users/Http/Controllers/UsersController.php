@@ -1,5 +1,5 @@
 <?php
-
+ 
 namespace Modules\Users\Http\Controllers;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -19,7 +19,7 @@ class UsersController extends Controller
     {
         //$Users=$this->UsersRepo->getAll();        
         // or user UsersRepository
-       $Users = new UsersRepository();        
+        $Users = new UsersRepository();    
        //dd($Users->getUsers());
         return getUrlView('users',$Users->getPaginate(5));
     }

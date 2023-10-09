@@ -18,5 +18,5 @@ class Groups extends Model
    //const UPDATED_AT ="updated_at";
    public function users(){
     return $this->hasMany(User::class);
-}
+   }
 }

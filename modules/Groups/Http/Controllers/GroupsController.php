@@ -54,4 +54,20 @@ class GroupsController extends Controller
         ];
         return getUrlView('groups/permission',compact('data'));
     }
+
+    public function postPermission(Groups $group, Request $request)
+    {
+
+        //dd($group);
+        if(!empty($request->role)){
+            $roleArr = $request->role;
+        }else{
+            $roleArr = [];
+        }
+        $roleJson = json_encode($roleArr);        
+        $group->permissions =  $roleJson ;        
+        $group->save();        
+        return redirect()->route('groups.index')->with('msg', "Phân quyền thành công !");
+        
+    }
 } 

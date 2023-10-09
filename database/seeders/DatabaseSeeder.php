@@ -28,10 +28,13 @@ class DatabaseSeeder extends Seeder
         $userId= DB::table('users')->insertGetId([
             'name' => 'Tu Ngoc Van',
             'email' => 'tungocvan@gmail.com',
+            'avatar' => '/images/avatar.jpg',
             'username' => 'tungocvan',
             'password' => Hash::make('123456'),
             'group_id' => $groupId,
             'user_id' => 0,
+            'status' => 1,
+            'provider' =>'website',
             'created_at' =>date('Y-m-d H:i:s'),
             'updated_at' =>date('Y-m-d H:i:s')
         ]);
