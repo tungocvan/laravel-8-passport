@@ -96,9 +96,10 @@ function isRole($dataArr,$moduleName,$role='view')
 
 function checkPermissions($user,$moduleName,$role)
 {
-    $roleJson = $user->group->permissions;
+        
+        $roleJson = $user->group->permissions;        
         if(!empty($roleJson)){
-            $roleArr = json_decode($roleJson,true);
+            $roleArr = json_decode($roleJson,true);            
             $check = isRole($roleArr,$moduleName,$role);
             return $check;
         }

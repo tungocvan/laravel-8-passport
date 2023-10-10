@@ -80,6 +80,7 @@ class Module extends Command
                     $name.'/Http/Requests',
                     $name.'/Models',
                     $name.'/Observers',
+                    $name.'/Policies',
                     $name.'/Providers',
                     $name.'/Repositories',
                     $name.'/Resources',

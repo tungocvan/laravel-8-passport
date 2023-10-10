@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Laravel\Sanctum\HasApiTokens;
+use Modules\Groups\Models\Groups;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -48,6 +49,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function group(){        
+        return $this->hasOne(Groups::class,'id','group_id');
+    }
 
     // protected $dispatchesEvents = [
     //     'creating' => "App\Events\UserUpdateEvent"

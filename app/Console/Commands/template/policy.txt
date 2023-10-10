@@ -1,0 +1,55 @@
+<?php 
+
+namespace Modules\{module}\Policies;
+use App\Models\User;
+use Modules\{module}\Models\{module};
+
+
+use Illuminate\Auth\Access\HandlesAuthorization;
+
+class {module}Policy
+{
+    use HandlesAuthorization;
+    public function viewAny(User $user)
+    {
+        // true: là cho phép
+        return true;
+    }
+
+
+    public function view(User $user, {module} ${varModule})
+    {
+         // true: là cho phép
+        return true;
+    }
+    
+    public function create(User $user)
+    {
+        // true: là cho phép
+        return true;
+    }
+
+    public function update(User $user, {module} ${varModule})
+    {
+        // true: là cho phép
+        return true;
+    }
+
+    public function delete(User $user, {module} ${varModule})
+    {
+        // true: là cho phép
+        return true;
+    }
+
+    public function restore(User $user, {module} ${varModule})
+    {
+        // true: là cho phép
+        return true;
+    }
+
+    public function forceDelete(User $user, {module} ${varModule})
+    {
+       // true: là cho phép
+        return true;
+    }
+}

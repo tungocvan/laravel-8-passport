@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Modules\Modules\Models\Modules;
 use Modules\Modules\Repositories\ModulesRepositoryInterface;
 use Modules\Modules\Repositories\ModulesRepository;
+use File;
+
 class ModulesController extends Controller
 {  
     protected $ModulesRepo;
@@ -32,11 +34,19 @@ class ModulesController extends Controller
     public function store(Request $request)
     {
         
-        $name = $request->name ?? '';
+        $name = ucfirst($request->name) ?? '';
         $title = $request->description ?? '';
+        
         if($name ==''){
-           return redirect()->route('modules.index');        
+           return redirect()->route('modules.add')->with('msg', "Không được bỏ trống tên Module");        
         }
+
+        $pathModule = base_path('modules/' . $name);
+
+        if(!File::exists($pathModule)) {
+            return redirect()->route('modules.add')->with('msg', "Không tồn tại Module này.");
+        }    
+
         $Modules=$this->ModulesRepo->create([
             'name' => $name,
             'title' => $title
@@ -55,15 +65,19 @@ class ModulesController extends Controller
     }
     public function edit(Modules $module)
     {
-        dd($module);
-        return 'sEdit';
-        $Modules=$this->ModulesRepo->delete($id);
-        return redirect()->route('modules.index')->with('msg', "Xóa Modules thành công");
+        return getUrlView('modules/edit',compact('module'));
     }
-    public function postEdit(Request $request)
-    {
-        return 'postEdit';
-        $Modules=$this->ModulesRepo->delete($id);
-        return redirect()->route('modules.index')->with('msg', "Xóa Modules thành công");
+    public function postEdit($id,Request $request){  
+        $name = ucfirst($request->name);    
+        $pathModule = base_path('modules/' . $name);
+        if(!File::exists($pathModule)) {
+            return redirect()->route('modules.index')->with('msg', "Module bạn thay đổi không tồn tại này.");
+        } 
+        $data = [
+            'name' => $name,
+            'title' => $request->description
+        ];
+        $Modules=$this->ModulesRepo->update($id,$data);
+        return redirect()->route('modules.index')->with('msg', "Cập nhật Modules thành công");
     }
 }

@@ -6,8 +6,8 @@
      Route::get('/users/add', [ModulesController::class, 'add'])->name('add');
      Route::post('/store', [ModulesController::class, 'store'])->name('post-add');
      Route::get('/delete/{id}', [ModulesController::class, 'postDelete'])->name('post-delete');
-     Route::get('/edit/{module}', [ModulesController::class, 'edit'])->name('edit');
-     Route::post('/edit/{module}', [ModulesController::class, 'postEdit'])->name('post-edit');
+     Route::get('/users/edit/{module}', [ModulesController::class, 'edit'])->name('edit');
+     Route::post('/users/edit/{id}', [ModulesController::class, 'postEdit'])->name('post-edit');
 });
 
  
