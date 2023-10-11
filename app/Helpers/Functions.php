@@ -236,13 +236,11 @@ function getMenuSidebar()
             ['id' => 4,'title' => 'Hồ sơ', 'parent_id' => 1, 'href' => '/users/profile' ,'iconClass' => ''],
             ['id' => 5,'title' => 'Nhóm người dùng', 'parent_id' => 1, 'href' => '/groups/users' ,'iconClass' => ''],
             ['id' => 6,'title' => 'Danh sách Modules', 'parent_id' => 1, 'href' => '/modules/users' ,'iconClass' => ''],
-            
         ],
     ];
 }
 
 function getGroupName($groupId){
-    
     $groups = Groups::find($groupId);    
     return $groups->name;
 }

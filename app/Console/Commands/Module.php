@@ -55,6 +55,10 @@ class Module extends Command
                     'module' => strtolower($name),
                     '--delete' => true
                 ]);
+                Artisan::call('module:make-policy', [
+                    'module' => strtolower($name),
+                    '--delete' => true
+                ]);
                 $this->info('Module delete success');
             }
         }else{
@@ -113,6 +117,9 @@ class Module extends Command
                     'name' => strtolower($name),
                 ]);
                 Artisan::call('module:repositories', [
+                    'module' => strtolower($name),
+                ]);
+                Artisan::call('module:make-policy', [
                     'module' => strtolower($name),
                 ]);
                 

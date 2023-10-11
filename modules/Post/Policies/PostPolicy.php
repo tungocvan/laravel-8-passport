@@ -10,47 +10,32 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class PostPolicy
 {
     use HandlesAuthorization;
-    public function viewAny(User $user)
+ 
+    public function view(User $user)
     {
-        // true: là cho phép
-        $check = checkPermissions($user,"post","view");        
-        return $check;
-    }
-
-
-    public function view(User $user, Post $post)
-    {
-        $check = checkPermissions($user,"post","view");        
+         // true: là cho phép
+        $check = checkPermissions($user,"Post","view");        
         return $check;
     }
     
     public function create(User $user)
     {
-        $check = checkPermissions($user,"post","add");        
+        // true: là cho phép
+        $check = checkPermissions($user,"Post","create");        
         return $check;
     }
 
     public function update(User $user, Post $post)
     {
-        $check = checkPermissions($user,"post","update");        
+        // true: là cho phép
+        $check = checkPermissions($user,"Post","update");        
         return $check;
     }
 
     public function delete(User $user, Post $post)
     {
-        $check = checkPermissions($user,"post","delete");        
-        return $check;
-    }
-
-    public function restore(User $user, Post $post)
-    {
         // true: là cho phép
-        return true;
-    }
-
-    public function forceDelete(User $user, Post $post)
-    {
-       // true: là cho phép
-        return true;
-    }
+        $check = checkPermissions($user,"Post","delete");        
+        return $check;
+    }    
 }

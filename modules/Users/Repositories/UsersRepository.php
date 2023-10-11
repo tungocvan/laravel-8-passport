@@ -1,14 +1,14 @@
 <?php
 namespace Modules\Users\Repositories;
 use App\Repositories\BaseRepository;
-use Modules\Users\Models\Users;
+use App\Models\User;
 use Modules\Users\Repositories\UsersRepositoryInterface;
 
 class UsersRepository extends BaseRepository implements UsersRepositoryInterface
 {
     public function getModel()
     {
-        return Users::class;
+        return User::class;
     }
     public function getUsers()
     {

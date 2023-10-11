@@ -16,4 +16,7 @@ class Users extends Model
    //protected $timestamps = true;
    //const CREATED_AT ="created_at";
    //const UPDATED_AT ="updated_at";  
+   public function group(){        
+    return $this->hasOne(Groups::class,'id','group_id');
+}
 }

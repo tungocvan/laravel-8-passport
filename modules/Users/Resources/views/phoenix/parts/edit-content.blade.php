@@ -1,40 +1,43 @@
-@php
+@php  
+  
   $options = [
     'name' => [
         'name' => 'name',
         'title' => 'Họ và tên',
-        'value' => old('name')
-    ],   
+        'value' => $data['user']->name
+    ],
     'email' => [
         'name' => 'email',
         'title' => 'Địa chỉ email',
-        'value' => old('email')
+        'value' => $data['user']->email,
+        'disable' => true
     ],
     'birthday' => [
         'name' => 'birthday',
         'title' => 'Sinh nhật',
-        'value' => old('birthday')
+        'value' => $data['user']->birthday
     ],
     'phone' => [
         'name' => 'phone',
         'title' => 'Số điện thoại',
-        'value' => old('phone')
+        'value' => $data['user']->phone
     ],
     'password' => [
-        'name' => 'passwordLogin',
+        'name' => 'password',
         'title' => 'Mật khẩu',
-        'type' => 'password'
+        'type' => 'password',
+        'value' => $data['user']->password
     ],
 ];  
 
 @endphp
-<form method="POST" action="{{ route('users.post-add') }}">
+<form method="POST" action="{{ route('users.post-edit',$data['user']->id) }}" enctype="multipart/form-data">
     @csrf
     <div class="container">
         <div class="row">
             <div class="col-6">
                 <div class="d-sm-flex justify-content-between mt-4">
-                    <h2 class="mb-4">Thêm mới thành viên</h2>                
+                    <h2 class="mb-4">Sửa thông tin thành viên</h2>                
                 </div>
                 <hr />
             </div>
@@ -53,7 +56,7 @@
         <hr />
         <div class="d-flex mb-3">
             <a href="{{route('users.index')}}" class="btn btn-phoenix-primary me-2 px-6">Hủy</a>
-            <button class="btn btn-primary" type="submit">Thêm mới</button>
+            <button class="btn btn-primary" type="submit">Cập nhật</button>
         </div>
         
     </div>

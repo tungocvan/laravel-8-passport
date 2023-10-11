@@ -1,8 +1,12 @@
 <?php 
  use Illuminate\Support\Facades\Route;
  use Modules\{module}\Http\Controllers\{module}Controller;
- Route::middleware(['web','{moduleName}.middleware'])->prefix('/{moduleName}')->name('{moduleName}.')->group(function(){
-     Route::get('/', [{module}Controller::class, 'index'])->name('index');
+ use Modules\{module}\Models\{module};
+Route::middleware(['web','auth','{moduleName}.middleware'])->prefix('/{moduleName}')->name('{moduleName}.')->group(function(){
+    Route::get('/', [{module}Controller::class, 'index'])->name('index')->can('view',{module}::class);
+    Route::get('/add', [{module}Controller::class, 'add'])->name('add')->can('create',{module}::class);
+    Route::get('/edit/{module}', [{module}Controller::class, 'edit'])->name('edit')->can('update',{module}::class);
+    Route::post('/delete/{id}', [{module}Controller::class, 'delete'])->name('delete')->can('delete',{module}::class);     
 });
 
  
