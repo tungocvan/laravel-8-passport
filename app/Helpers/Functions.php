@@ -244,3 +244,33 @@ function getGroupName($groupId){
     $groups = Groups::find($groupId);    
     return $groups->name;
 }
+
+
+function stringFormatDate($strDate,$format){
+    $dateStr = strtotime($strDate); 
+    $dateTime = new DateTime();
+    $date = $dateTime->setTimestamp($dateStr);
+    return $date->format($format);
+}
+
+function stringFormatCurrency($options){
+    $currency = $options['currency'];
+    if(!is_numeric($currency)) return '';
+    $decimal = $options['decimal'] ?? '.';
+    
+    $number = $options['number'] ?? 0;
+    $result = number_format($currency,$number);
+    if($decimal === '.'){
+        $result = str_replace($decimal,'x',$result);
+        $result = str_replace(',',$decimal,$result);
+        $result = str_replace('x',',',$result);
+    }
+    if($decimal === ','){        
+        $result = str_replace('.','x',$result);
+        $result = str_replace('.',$decimal,$result);
+        $result = str_replace('x','.',$result);
+    }
+    return $result;
+    //return str_replace($decimal, $float ,number_format($currency,$number));
+    //return number_format(str_replace($decimal, $float ,$currency),$number);
+}

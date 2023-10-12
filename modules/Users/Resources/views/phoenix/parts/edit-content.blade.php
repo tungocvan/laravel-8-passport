@@ -1,5 +1,5 @@
-@php  
-  
+@php   
+  // stringFormatDate($data['user']->birthday,'d/m/Y')
   $options = [
     'name' => [
         'name' => 'name',
@@ -14,8 +14,8 @@
     ],
     'birthday' => [
         'name' => 'birthday',
-        'title' => 'Sinh nhật',
-        'value' => $data['user']->birthday
+        'title' => 'Sinh nhật',      
+        'value' => stringFormatDate($data['user']->birthday,'d/m/Y')
     ],
     'phone' => [
         'name' => 'phone',
@@ -28,6 +28,9 @@
         'type' => 'password',
         'value' => $data['user']->password
     ],
+    'avatar' => [
+        'value' => $data['user']->avatar,
+    ]
 ];  
 
 @endphp
@@ -44,13 +47,16 @@
         </div>
         
         <div class="row">
-            <div class="col-6">            
+            <div class="col-3">            
                 <x-input-text :options="$options['name']"/>                
                 <x-input-date :options="$options['birthday']"/>
                 <x-input-text :options="$options['phone']"/>
                 <x-input-text :options="$options['email']"/>
-                <x-input-text :options="$options['password']"/>
-                
+                <x-input-text :options="$options['password']"/>                
+            </div>
+            <div class="col-3">
+                <h4 class="mt-4">Ảnh đại diện</h4>   
+                <x-input-file :options="$options['avatar']" />      
             </div>
         </div>
         <hr />

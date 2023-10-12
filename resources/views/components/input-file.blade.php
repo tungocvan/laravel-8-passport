@@ -3,6 +3,7 @@
      $number = (string) rand(10,99);
      $name = $options['name'] ?? 'filepath';
      $id =   $options['id'] ?? $name.'_'.$number;
+     $value = $options['value'] ?? '';
 @endphp
 <div class='row mb-3'> 
 <div class='input-group'>
@@ -11,7 +12,7 @@
         <i class='fa fa-picture-o'></i> Choose
       </a>
     </span>
-    <input id='thumbnail_{{$id}}' class='form-control' type='text' name='{{ $name }}[]'  >
+    <input id='thumbnail_{{$id}}' class='form-control' type='text' name='{{ $name }}[]' @if($value !=='') value={{$value}}  @endif >
   </div>
 <div id='holder_{{$id}}' style='margin-top:15px;max-height:100px;'></div>
 </div>

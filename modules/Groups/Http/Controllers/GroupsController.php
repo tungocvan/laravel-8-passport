@@ -36,8 +36,8 @@ class GroupsController extends Controller
         $modules = Modules::all();      
         $roleListArr = [
             "view" => "Xem",
-            "add" => "Thêm",
-            "edit" => "Sửa",
+            "create" => "Thêm",
+            "update" => "Sửa",
             "delete" => "Xóa"
         ];
         $roleJson = $group->permissions;

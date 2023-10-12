@@ -21,7 +21,7 @@ class PostPolicy
     public function create(User $user)
     {
         // true: là cho phép
-        $check = checkPermissions($user,"Post","create");        
+        $check = checkPermissions($user,"Post","create");                
         return $check;
     }
 

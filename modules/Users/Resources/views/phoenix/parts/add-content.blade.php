@@ -28,7 +28,7 @@
 ];  
 
 @endphp
-<form method="POST" action="{{ route('users.post-add') }}">
+<form method="POST" action="{{ route('users.post-add') }}" enctype="multipart/form-data">
     @csrf
     <div class="container">
         <div class="row">
@@ -37,17 +37,20 @@
                     <h2 class="mb-4">Thêm mới thành viên</h2>                
                 </div>
                 <hr />
-            </div>
+            </div>            
         </div>
         
         <div class="row">
-            <div class="col-6">            
+            <div class="col-3">            
                 <x-input-text :options="$options['name']"/>                
                 <x-input-date :options="$options['birthday']"/>
                 <x-input-text :options="$options['phone']"/>
                 <x-input-text :options="$options['email']"/>
-                <x-input-text :options="$options['password']"/>
-                
+                <x-input-text :options="$options['password']"/>                
+            </div>
+            <div class="col-3">
+                <h4 class="mt-4">Ảnh đại diện</h4>   
+                <x-input-file />      
             </div>
         </div>
         <hr />

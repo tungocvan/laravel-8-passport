@@ -4,6 +4,7 @@ namespace Modules\Users\Http\Controllers;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Modules\Users\Repositories\UsersRepository;
@@ -57,18 +58,20 @@ class UsersController extends Controller
         
         $username  = Str::beforeLast($request->email, '@');        
         
+        $birthday =  Carbon::createFromFormat('d/m/Y', $request->birthday); 
+        $avatar = $request->filepath[0];        
         $user = [
             'name' => $request->name,
             'username' => $username,
             'email' => $request->email,
             'phone' => $request->phone,
-            'birthday' => $request->birthday,
+            'birthday' => $birthday,
             'password' => Hash::make($request->password),
             'group_id' => 4,
             'user_id' => 1,
             'provider' =>'website',
             'status' => 1,
-            'avatar' => '/images/avatar.jpg'        
+            'avatar' => $avatar        
         ];
         
         $this->UsersRepo->create($user);
@@ -97,13 +100,23 @@ class UsersController extends Controller
         ];
         $request->validate($rules,$message,$attributes);
         $userUpdate = $request->all();
+        
         $user = User::find($id);    
 
         if($user->password !== $request->password) {
             $userUpdate['password'] = Hash::make($request->password);            
         }else{
             unset($userUpdate['password']);
-        } 
+        }         
+        //dd($userUpdate);
+        if($userUpdate['phone'] === null) unset($userUpdate['phone']);
+        if($userUpdate['birthday'] === null){
+            unset($userUpdate['birthday']);
+        }else{
+            $userUpdate['birthday'] =  Carbon::createFromFormat('d/m/Y', $request->birthday);          
+        }     
+        $userUpdate['avatar'] = $request->filepath[0];
+        unset($userUpdate['filepath']);        
         $this->UsersRepo->update($id,$userUpdate);
         return redirect()->route('users.index')->with('msg', "Cập nhật Modules thành công");   
     }
