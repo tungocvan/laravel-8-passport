@@ -47,6 +47,7 @@ class LoginController extends Controller
     
     protected function validateLogin(Request $request)
     {        
+       
         $request->validate([
             $this->username() => 'required|string',
             'password' => 'required|string|min:3',
@@ -56,6 +57,7 @@ class LoginController extends Controller
             'password.required' => 'Mật khẩu bắt buộc phải nhập',
             'password.min' => 'Mật khẩu ít nhất :min ký tự',
         ]);
+        
     }
     public function username()
     {
@@ -63,6 +65,7 @@ class LoginController extends Controller
     }
     protected function credentials(Request $request)
     {
+       
         $fieldb = 'username';
         if(filter_var($request->username,FILTER_VALIDATE_EMAIL)){
             $fieldb = 'email';
@@ -71,6 +74,7 @@ class LoginController extends Controller
             $fieldb => $request->username,
             'password' => $request->password
         ];
+        
         return $dataArr;
         //return $request->only($this->username(), 'password');
     }
@@ -93,6 +97,7 @@ class LoginController extends Controller
             $user->name = $userGoogle->getName();
             $user->email = $userGoogle->getEmail();
             $user->provider_id = $userGoogle->getId();
+            $user->phone = '0903971949';
             $user->provider = 'google';
             $user->password = Hash::make(rand());
             $user->group_id = 1;
@@ -131,6 +136,7 @@ class LoginController extends Controller
             $user->email = $userFacebook->getEmail();
             $user->provider_id = $userFacebook->getId();
             $user->provider = 'facebook';
+            $user->phone = '0876445599';
             $user->password = Hash::make(rand());
             $user->group_id = 1;
             $user->username =$user->email;

@@ -2,6 +2,14 @@
 
 namespace App\Providers;
 
+use Modules\Users\Models\Users;
+use Modules\Users\Policies\UsersPolicy;
+
+
+use Modules\Groups\Models\Groups;
+use Modules\Groups\Policies\GroupsPolicy;
+
+
 use Modules\Post\Models\Post;
 use Modules\Post\Policies\PostPolicy;
 
@@ -17,6 +25,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
+		Users::class => UsersPolicy::class,
+		Groups::class => GroupsPolicy::class,
 		Post::class => PostPolicy::class,
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
     ];

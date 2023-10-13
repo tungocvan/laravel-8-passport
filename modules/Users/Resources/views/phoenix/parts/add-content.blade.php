@@ -1,4 +1,11 @@
 @php
+  $groupname = [];
+  foreach (getGroupName() as $item) {
+        $groupname[] = [
+            'value' => $item['id'],
+            'title' => $item['name']
+        ];
+    }
   $options = [
     'name' => [
         'name' => 'name',
@@ -25,6 +32,12 @@
         'title' => 'Mật khẩu',
         'type' => 'password'
     ],
+    'groups' => [
+        'title' => 'Groups Name',
+        'select' => $groupname,
+        'selected' => 4,
+        'name' => 'group_id'
+    ]
 ];  
 
 @endphp
@@ -46,7 +59,8 @@
                 <x-input-date :options="$options['birthday']"/>
                 <x-input-text :options="$options['phone']"/>
                 <x-input-text :options="$options['email']"/>
-                <x-input-text :options="$options['password']"/>                
+                <x-input-text :options="$options['password']"/>   
+                <x-input-select :options="$options['groups']"/>             
             </div>
             <div class="col-3">
                 <h4 class="mt-4">Ảnh đại diện</h4>   

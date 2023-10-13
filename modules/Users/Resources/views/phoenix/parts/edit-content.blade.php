@@ -1,5 +1,14 @@
 @php   
   // stringFormatDate($data['user']->birthday,'d/m/Y')
+  // dd(getGroupName());  
+    //dd($data['user']);
+    $groupname = [];
+    foreach (getGroupName() as $item) {
+        $groupname[] = [
+            'value' => $item['id'],
+            'title' => $item['name']
+        ];
+    }
   $options = [
     'name' => [
         'name' => 'name',
@@ -30,7 +39,18 @@
     ],
     'avatar' => [
         'value' => $data['user']->avatar,
-    ]
+    ],
+    'groups' => [
+        'title' => 'Groups Name',
+        'name' => 'group_id',
+        'select' => $groupname,
+        'selected' => $data['user']->group_id
+    ],
+    'active' => [
+        'title' => 'Kích hoạt',
+        'name' => 'status',    
+        'checked' => $data['user']->status  
+    ],
 ];  
 
 @endphp
@@ -52,11 +72,14 @@
                 <x-input-date :options="$options['birthday']"/>
                 <x-input-text :options="$options['phone']"/>
                 <x-input-text :options="$options['email']"/>
-                <x-input-text :options="$options['password']"/>                
+                <x-input-text :options="$options['password']"/>        
+                <x-input-select :options="$options['groups']"/>  
+                <x-input-check :options="$options['active']"/>                  
             </div>
             <div class="col-3">
                 <h4 class="mt-4">Ảnh đại diện</h4>   
-                <x-input-file :options="$options['avatar']" />      
+                  <x-input-file :options="$options['avatar']" />                   
+                </div>  
             </div>
         </div>
         <hr />

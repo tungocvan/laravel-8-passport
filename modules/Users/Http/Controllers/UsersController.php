@@ -33,10 +33,12 @@ class UsersController extends Controller
     }
     public function postAdd(Request $request)
     {           
+        // dd($request->all());
         $rules = [
             'name' => ['required', 'string', 'max:255'],                        
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],                        
-            'passwordLogin' => ['required', 'string','min:6']
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],                                                       
+            'phone' => ['required', 'string', 'max:255', 'unique:users'],                                                       
+            'passwordLogin' => ['required', 'string','min:6'],
         ];
         $message  = [
             'required' => ':attribute không được bỏ trống',            
@@ -50,6 +52,7 @@ class UsersController extends Controller
             'username' => 'Tài khoản',
             'usernameLogin' => 'Tài khoản',
             'name' => 'Họ và tên',
+            'phone' => 'Số điện thoại',
             'email' => 'Địa chỉ email',
             'emailLogin' => 'Địa chỉ email',            
             'passwordLogin' => 'Mật khẩu',
@@ -59,7 +62,7 @@ class UsersController extends Controller
         $username  = Str::beforeLast($request->email, '@');        
         
         $birthday =  Carbon::createFromFormat('d/m/Y', $request->birthday); 
-        $avatar = $request->filepath[0];        
+        $avatar = $request->filepath[0] ?? '/images/avatar.jpg';        
         $user = [
             'name' => $request->name,
             'username' => $username,
@@ -67,7 +70,7 @@ class UsersController extends Controller
             'phone' => $request->phone,
             'birthday' => $birthday,
             'password' => Hash::make($request->password),
-            'group_id' => 4,
+            'group_id' => $request->group_id[0],
             'user_id' => 1,
             'provider' =>'website',
             'status' => 1,
@@ -78,13 +81,12 @@ class UsersController extends Controller
         return redirect()->route('users.index')->with('msg', "Thêm Tài khoản thành công");    
     }
     public function edit(User $user)
-    {            
-        
+    {                  
         return getUrlView('users/edit',compact('user'));    
     }
     public function postEdit($id,Request $request)
     {           
-        
+        //dd($request->all());
         $rules = [
             'name' => ['required', 'string', 'max:255'],                                                         
             'password' => ['required', 'string','min:6']
@@ -115,9 +117,18 @@ class UsersController extends Controller
         }else{
             $userUpdate['birthday'] =  Carbon::createFromFormat('d/m/Y', $request->birthday);          
         }     
-        $userUpdate['avatar'] = $request->filepath[0];
+        $userUpdate['avatar'] = $request->filepath[0];        
         unset($userUpdate['filepath']);        
+        $userUpdate['group_id'] = $request->group_id[0];
+        if($request->status === 'on'){
+            $userUpdate['status'] = 1;
+        }else{
+            $userUpdate['status'] = 0;
+        }
+        
+        //dd($userUpdate);
         $this->UsersRepo->update($id,$userUpdate);
+        
         return redirect()->route('users.index')->with('msg', "Cập nhật Modules thành công");   
     }
     public function postDelete($id)

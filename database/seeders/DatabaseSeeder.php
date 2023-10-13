@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Tu Ngoc Van',
             'email' => 'tungocvan@gmail.com',
             'avatar' => '/images/avatar.jpg',
+            'phone' => '0903971949',
             'username' => 'tungocvan',
             'password' => Hash::make('123456'),
             'group_id' => $groupId,
@@ -39,13 +40,13 @@ class DatabaseSeeder extends Seeder
             'updated_at' =>date('Y-m-d H:i:s')
         ]);
         DB::table('modules')->insert([
-            'name' => 'users',
+            'name' => 'Users',
             'title' => "Quản lý người dùng",                 
             'created_at' =>date('Y-m-d H:i:s'),
             'updated_at' =>date('Y-m-d H:i:s')
             ]);
            DB::table('modules')->insert([
-            'name' => 'groups',
+            'name' => 'Groups',
             'title' => "Quản lý nhóm",                 
             'created_at' =>date('Y-m-d H:i:s'),
             'updated_at' =>date('Y-m-d H:i:s')

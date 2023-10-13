@@ -240,8 +240,12 @@ function getMenuSidebar()
     ];
 }
 
-function getGroupName($groupId){
-    $groups = Groups::find($groupId);    
+function getGroupName(){
+    $groups = Groups::select(['id','name'])->get()->toArray();       
+    return $groups;
+}
+function getGroupNameById($id){
+    $groups = Groups::find($id);       
     return $groups->name;
 }
 

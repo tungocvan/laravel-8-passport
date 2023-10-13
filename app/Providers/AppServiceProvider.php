@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Providers;
+use App\View\Components\InputCheck;
+use App\View\Components\InputSelect;
 use App\View\Components\editor;
 use App\View\Components\InputDate;
 use App\View\Components\InputFile;
@@ -55,6 +57,8 @@ class AppServiceProvider extends ServiceProvider
     {
 		Paginator::useBootstrap();
 		//boot 
+	Blade::component('input-check', InputCheck::class); 
+	Blade::component('input-select', InputSelect::class); 
 	Blade::component('input-file', InputFile::class); 
 	Blade::component('input-date', InputDate::class); 
 	Blade::component('input-text', InputText::class); 	

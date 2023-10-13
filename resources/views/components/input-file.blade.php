@@ -14,7 +14,11 @@
     </span>
     <input id='thumbnail_{{$id}}' class='form-control' type='text' name='{{ $name }}[]' @if($value !=='') value={{$value}}  @endif >
   </div>
-<div id='holder_{{$id}}' style='margin-top:15px;max-height:100px;'></div>
+<div id='holder_{{$id}}' style='margin-top:15px;max-height:100px;'>
+      @if ($value)
+          <img src="{{$value}}" style="height: 5rem;">
+      @endif
+</div>      
 </div>
 @section('jsFooter')
 @parent

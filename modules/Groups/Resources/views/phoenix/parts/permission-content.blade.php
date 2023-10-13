@@ -36,7 +36,7 @@
                               </div>
                           @endforeach  
                         @endif
-                        @if ($module->name == 'groups')
+                        @if ($module->name == 'Groups')
                             <div class="col-3">
                                 <label for="role_{{$module->name}}_permission">
                                     <input type="checkbox" name="role[{{$module->name}}][]" id="role_{{$module->name}}_permission" value="permission" 
