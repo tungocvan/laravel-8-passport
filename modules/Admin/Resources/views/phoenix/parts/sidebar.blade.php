@@ -7,8 +7,8 @@
         <ul class="navbar-nav flex-column" id="navbarVerticalNav">
             <li class="nav-item">
                 <p class="navbar-vertical-label">Apps</p>        
-                 @foreach ($menuSidebar as $item)
-                    {!!render_menu_item($item)!!}   
+                 @foreach ($menuSidebar as $key => $item)     
+                    {!!render_menu_item($item)!!}
                  @endforeach                                        
             </li>
             <li class="nav-item">

@@ -193,7 +193,7 @@ function render_menu_item($options=null){
             <div class='parent-wrapper label-1'>
                 <ul class='nav parent collapsed $collapsedUl $show' data-bs-parent='#navbarVerticalCollapse' id='$idMoudle' style=''>
                     <li class='collapsed-nav-item-title d-none'>$titleModule</li>                            
-                    $item                 
+                   $item             
                 </ul>
             </div>
         </div>
@@ -214,14 +214,14 @@ function getUrlView($titleUrl,$data=[])
 function getMenuSidebar()
 {
     return [
-        [
+        'Post' => [
             ['id' => 1,'title' => 'Bài viết', 'parent_id' => 0, 'href' => '#post' ,'iconClass' => 'far fa-list-alt'],
             ['id' => 2,'title' => 'Tất cả bài viết', 'parent_id' => 1, 'href' => '/post' ,'iconClass' => ''],
             ['id' => 3,'title' => 'Viết bài mới', 'parent_id' => 1, 'href' => '/post/add' ,'iconClass' => ''],
             ['id' => 4,'title' => 'Chuyên mục', 'parent_id' => 1, 'href' => '/post/category' ,'iconClass' => ''],
             ['id' => 5,'title' => 'Thẻ', 'parent_id' => 1, 'href' => '/post/tags' ,'iconClass' => ''],
         ],
-        [
+        'Product' => [
             ['id' => 1,'title' => 'Sản phẩm', 'parent_id' => 0, 'href' => '#product' ,'iconClass' => 'fab fa-first-order'],
             ['id' => 2,'title' => 'Tất cả sản phẩm', 'parent_id' => 1, 'href' => '/product' ,'iconClass' => ''],
             ['id' => 3,'title' => 'Thêm mới', 'parent_id' => 1, 'href' => '/product/add' ,'iconClass' => ''],
@@ -229,7 +229,7 @@ function getMenuSidebar()
             ['id' => 5,'title' => 'Từ khóa', 'parent_id' => 1, 'href' => '/product/tags' ,'iconClass' => ''],
             ['id' => 6,'title' => 'Các thuộc tính', 'parent_id' => 1, 'href' => '/product/attributes' ,'iconClass' => ''],
         ],
-        [
+        'Users' => [
             ['id' => 1,'title' => 'Thành viên', 'parent_id' => 0, 'href' => '#users' ,'iconClass' => 'far fa-user-circle'],
             ['id' => 2,'title' => 'Tất cả người dùng', 'parent_id' => 1, 'href' => '/users' ,'iconClass' => ''],
             ['id' => 3,'title' => 'Thêm mới', 'parent_id' => 1, 'href' => '/users/add' ,'iconClass' => ''],

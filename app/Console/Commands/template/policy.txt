@@ -25,14 +25,14 @@ class {module}Policy
         return $check;
     }
 
-    public function update(User $user, {module} ${varModule})
+    public function update(User $user)
     {
-        // true: là cho phép
+        // true: là cho phép 
         $check = checkPermissions($user,"{module}","update");        
         return $check;
     }
 
-    public function delete(User $user, {module} ${varModule})
+    public function delete(User $user)
     {
         // true: là cho phép
         $check = checkPermissions($user,"{module}","delete");        

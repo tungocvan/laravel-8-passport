@@ -26,6 +26,10 @@ class GroupsController extends Controller
         $data = $Groups->getGroups()->all();
         return getUrlView('groups',compact('data'));
     }
+    public function add()
+    {
+        return getUrlView('groups/add');
+    }
     public function permission(Groups $group)
     {
         // $Groups=$this->GroupsRepo->getAll();

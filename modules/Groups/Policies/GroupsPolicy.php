@@ -14,6 +14,7 @@ class GroupsPolicy
     public function view(User $user)
     {
          // true: là cho phép
+        
         $check = checkPermissions($user,"Groups","view");        
         return $check;
     }

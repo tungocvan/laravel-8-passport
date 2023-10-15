@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
        if($groupId > 0) {        
         $userId= DB::table('users')->insertGetId([
             'name' => 'Tu Ngoc Van',
-            'email' => 'tungocvan@gmail.com',
+            'email' => 'tungocvan2@gmail.com',
             'avatar' => '/images/avatar.jpg',
             'phone' => '0903971949',
             'username' => 'tungocvan',

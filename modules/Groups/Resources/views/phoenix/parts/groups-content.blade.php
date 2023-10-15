@@ -4,7 +4,10 @@
 @if (session('msg'))
     <div class="alert alert-outline-success">{{session('msg')}}</div>
 @endif 
-<h3>Danh sách nhóm</h3>
+<h3>Danh sách nhóm</h3> 
+@can('create', Modules\Groups\Models\Groups::class)
+            <a class="btn btn-primary mt-2" href="{{route('groups.add')}}">Thêm mới</a> 
+@endcan
 <hr />
 <table class="table">
   <thead>

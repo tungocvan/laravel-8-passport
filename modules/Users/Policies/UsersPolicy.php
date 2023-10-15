@@ -13,26 +13,27 @@ class UsersPolicy
  
     public function view(User $user)
     {
-         // true: là cho phép
+         // true: là cho phép        
         $check = checkPermissions($user,"Users","view");        
         return $check;
     }
     
     public function create(User $user)
     {
-        // true: là cho phép
+        // true: là cho phép     
+        
         $check = checkPermissions($user,"Users","create");        
         return $check;
     }
 
-    public function update(User $user, Users $users)
+    public function update(User $user)
     {
         // true: là cho phép
         $check = checkPermissions($user,"Users","update");        
         return $check;
     }
 
-    public function delete(User $user, Users $users)
+    public function delete(User $user)
     {
         // true: là cho phép
         $check = checkPermissions($user,"Users","delete");        
