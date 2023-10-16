@@ -27,6 +27,11 @@ class PostController extends Controller
     {    
         return getUrlView('post/add');    
     }
+    public function postAdd(Request $request)
+    {    
+        dd($request->all());
+        return getUrlView('post/add');    
+    }
     public function category()
     {    
         return getUrlView('post/category');    

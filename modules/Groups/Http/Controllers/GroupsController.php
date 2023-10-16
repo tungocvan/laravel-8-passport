@@ -30,6 +30,16 @@ class GroupsController extends Controller
     {
         return getUrlView('groups/add');
     }
+    public function postAdd(Request $request)
+    {
+        $name = ucfirst($request->name);
+        $check = Groups::where('name',$name)->get();
+        if($check->count() === 0){
+            $this->GroupsRepo->create(['name' => $name, 'user_id' => 1]);            
+            return redirect()->route('groups.index')->with('msg', "Thêm nhóm mới thành công"); 
+        }
+        return redirect()->route('groups.index')->with('msg', "Nhóm bạn tạo đã có"); 
+    }
     public function permission(Groups $group)
     {
         // $Groups=$this->GroupsRepo->getAll();
@@ -56,6 +66,7 @@ class GroupsController extends Controller
             'modules' => $modules,
             'group' => $group
         ];
+
         return getUrlView('groups/permission',compact('data'));
     }
 
@@ -70,6 +81,7 @@ class GroupsController extends Controller
         }
         $roleJson = json_encode($roleArr);        
         $group->permissions =  $roleJson ;        
+        //dd($roleJson);
         $group->save();        
         return redirect()->route('groups.index')->with('msg', "Phân quyền thành công !");
         

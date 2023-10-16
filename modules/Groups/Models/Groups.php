@@ -12,8 +12,8 @@ class Groups extends Model
    //protected $connection = 'wordpress';
    //protected $table = "";
    //protected $primaryKey = "id";
-   //protected $fillable = [];
-   //protected $timestamps = true;
+   protected $fillable = ['name','user_id'];
+   public $timestamps = true;
    //const CREATED_AT ="created_at";
    //const UPDATED_AT ="updated_at";
    public function users(){

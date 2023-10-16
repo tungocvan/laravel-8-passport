@@ -26,17 +26,23 @@ class GroupsPolicy
         return $check;
     }
 
-    public function update(User $user, Groups $groups)
+    public function update(User $user)
     {
         // true: là cho phép
         $check = checkPermissions($user,"Groups","update");        
         return $check;
     }
 
-    public function delete(User $user, Groups $groups)
+    public function delete(User $user)
     {
         // true: là cho phép
         $check = checkPermissions($user,"Groups","delete");        
+        return $check;
+    }    
+    public function permission(User $user)
+    {
+        // true: là cho phép
+        $check = checkPermissions($user,"Groups","permission");        
         return $check;
     }    
 }

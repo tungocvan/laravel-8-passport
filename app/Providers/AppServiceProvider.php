@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Providers;
+use App\View\Components\InputTextArea;
 use App\View\Components\InputCheck;
 use App\View\Components\InputSelect;
 use App\View\Components\editor;
@@ -57,6 +58,7 @@ class AppServiceProvider extends ServiceProvider
     {
 		Paginator::useBootstrap();
 		//boot 
+	Blade::component('input-text-area', InputTextArea::class); 
 	Blade::component('input-check', InputCheck::class); 
 	Blade::component('input-select', InputSelect::class); 
 	Blade::component('input-file', InputFile::class); 
