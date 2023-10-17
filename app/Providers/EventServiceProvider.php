@@ -1,5 +1,7 @@
 <?php
 namespace App\Providers;
+use Modules\Category\Models\Category;
+use Modules\Category\Observers\CategoryObserver;
 use Modules\Groups\Models\Groups;
 use Modules\Groups\Observers\GroupsObserver;
 use Modules\Modules\Models\Modules;
@@ -55,6 +57,7 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         //observe
+		Category::observe(new CategoryObserver);
 		Groups::observe(new GroupsObserver);
 		Modules::observe(new ModulesObserver);
 		Product::observe(new ProductObserver);

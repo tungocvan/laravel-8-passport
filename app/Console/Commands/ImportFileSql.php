@@ -41,9 +41,9 @@ class ImportFileSql extends Command
     {
         $file = $this->argument('name');
         // Kiểm tra file SQL có tồn tại hay không
-        $sql_file = storage_path().'/'.$file;
+        $sql_file = storage_path().'/mysql//'.$file;
         if(!file_exists($sql_file)){
-            $this->info("kiểm tra file $file có nằm trong storage");            
+            $this->info("kiểm tra không có file $file có nằm trong storage");            
         }else{
             // Lấy nội dung của file SQL
                 $sql_content = file_get_contents($sql_file);

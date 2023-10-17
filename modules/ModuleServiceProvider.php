@@ -10,6 +10,7 @@ class ModuleServiceProvider extends ServiceProvider
     }
     private $middlewares = [
         //add middleware
+        'category.middleware' => \Modules\Category\Http\Middleware\Category::class,
         'groups.middleware' => \Modules\Groups\Http\Middleware\Groups::class,
         'modules.middleware' => \Modules\Modules\Http\Middleware\Modules::class,
         'product.middleware' => \Modules\Product\Http\Middleware\Product::class,

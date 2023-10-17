@@ -24,6 +24,10 @@ class AppServiceProvider extends ServiceProvider
     {
         //singleton
 	$this->app->singleton(
+		\Modules\Category\Repositories\CategoryRepositoryInterface::class,
+		\Modules\Category\Repositories\CategoryRepository::class,
+		);
+	$this->app->singleton(
 		\Modules\Groups\Repositories\GroupsRepositoryInterface::class,
 		\Modules\Groups\Repositories\GroupsRepository::class,
 		);

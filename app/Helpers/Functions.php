@@ -278,3 +278,32 @@ function stringFormatCurrency($options){
     //return str_replace($decimal, $float ,number_format($currency,$number));
     //return number_format(str_replace($decimal, $float ,$currency),$number);
 }
+
+// function getCategoriesOptions($categories, $parentId = 0)
+// {
+//     $categoryNew = [];
+//     if ($categories) {               
+//         foreach ($categories as $key => $category) {
+//             if ($category->termTaxonomy->parent == $parentId) {                
+//                 array_push($categoryNew,['value' => $category->term_id, 'title' => $category['name']]);                
+//                 unset($categories[$key]);
+//                 getCategoriesOptions($categories, $category->term_id);                
+//             }
+//         }        
+//         return $categoryNew;
+//     }
+//     return $categoryNew;
+// }
+
+function getCategoriesOptions($categories, $parentId = 0, $char = '')
+{
+    if ($categories) {       
+        foreach ($categories as $key => $category) {
+            if ($category->termTaxonomy->parent == $parentId) {
+                echo '<option value=' . $category->term_id . '>' . $char . $category['name']. '</option>';
+                unset($categories[$key]);
+                getCategoriesOptions($categories, $category->term_id, $char . "ㅤㅤ");
+            }
+        }
+    }
+}
