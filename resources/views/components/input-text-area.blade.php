@@ -11,7 +11,7 @@
     @if ($title !=='')
         <label class="form-label mb-2" for="{{ $name }}">{{ __($title) }}</label>        
     @endif  
-    <textarea style="height:{{$height}}" class="form-control pt-5  @error($name) is-invalid @enderror"  rows="{{$rows}}" name="{{ $name }}"  id="{{ $id }}" @if($value !=='') value="{{ $value }}" @endif ></textarea>
+    <textarea style="height:{{$height}}" class="form-control pt-5  @error($name) is-invalid @enderror"  rows="{{$rows}}" name="{{ $name }}"  id="{{ $id }}" @if($value !=='') value="{{ $value }}" @endif >{{ $value }}</textarea>
     @error($name)
         <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>

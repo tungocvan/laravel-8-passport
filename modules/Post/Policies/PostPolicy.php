@@ -25,14 +25,14 @@ class PostPolicy
         return $check;
     }
 
-    public function update(User $user, Post $post)
+    public function update(User $user)
     {
         // true: là cho phép
         $check = checkPermissions($user,"Post","update");        
         return $check;
     }
 
-    public function delete(User $user, Post $post)
+    public function delete(User $user)
     {
         // true: là cho phép
         $check = checkPermissions($user,"Post","delete");        
