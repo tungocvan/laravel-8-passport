@@ -9,10 +9,11 @@ class Post extends Model
 {
     use HasFactory;
    //protected $connection = 'wordpress';
-   //protected $table = "";
-   //protected $primaryKey = "id";
+   protected $table = "nbw_posts";
+   protected $primaryKey = "ID";
    //protected $fillable = [];
-   //protected $timestamps = true;
-   //const CREATED_AT ="created_at";
-   //const UPDATED_AT ="updated_at";
+   public $timestamps = true;
+   const CREATED_AT ="post_date";
+   const UPDATED_AT ="post_date_gmt";
 }
+ 

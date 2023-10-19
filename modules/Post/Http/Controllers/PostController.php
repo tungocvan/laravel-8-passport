@@ -30,7 +30,19 @@ class PostController extends Controller
     }
     public function add()
     {    
-        return getUrlView('post/add');    
+        $category = Terms::all(); 
+        return getUrlView('post/add',compact('category'));    
+    }
+    public function postAdd(Request $request)
+    {    
+        //dd($request->all());   
+        $newPost = new Post;
+        $newPost->post_title = $request->title;
+        $newPost->post_content = $request->editor1;
+        $newPost->post_status = 'publish';      
+        $newPost->post_type = 'post';
+        $newPost->save();
+        return redirect()->route('post.index')->with('msg', "Đã thêm bài viết thành công");  
     }
     public function postAddCategory(Request $request)
     {    
@@ -74,8 +86,26 @@ class PostController extends Controller
 
         return redirect()->route('post.category')->with('msg', "Thêm chuyên mục thành công");    
     }
-    public function postCategoryDelete(Request $request){
-
+    public function postCategoryDelete($id){     
+        $termRelationships= TermRelationships::where('object_id',$id)->get();
+        if($termRelationships->count() > 0 ) {
+            foreach ($termRelationships as $key => $item) {                     
+                $terms = Terms::find($item->term_taxonomy_id);
+                $terms->delete();
+                $taxonomy= TermTaxonomy::where('term_id',$item->term_taxonomy_id);
+                $taxonomy->delete();
+            }    
+        }
+        $terms = Terms::find($id);
+        $terms->delete();
+        $taxonomy= TermTaxonomy::where('term_id',$id);
+        $taxonomy->delete();        
+        $termRelationships= TermRelationships::where('term_taxonomy_id',$id);
+        $termRelationships->delete();        
+        
+        
+        
+        return redirect()->route('post.category')->with('msg', "Xóa chuyên mục thành công");
     }
     public function postCategoryEdit($id){
         //dd($id);

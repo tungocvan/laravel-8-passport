@@ -320,6 +320,7 @@ function getCategoriesOptions($options)
         }
     }
 }
+
 function getCategoriesTable($categories, $parentId = 0, $char = '')
 {
     if ($categories) {       
@@ -329,10 +330,25 @@ function getCategoriesTable($categories, $parentId = 0, $char = '')
                 echo "<div style='display:flex' class='my-2'>";
                 echo "<div style='width:200px'>". $char.$category->name. "</div>";
                 echo "<div class='mx-2'>". "<a class='btn btn-primary' href='".route('post.post-edit-category',$category->term_id)."'>Sửa</a>". "</div>";
-                echo "<div class='mx-2'>". "<a class='btn btn-primary' href='#'>Xóa</a>". "</div>";
+                echo "<div class='mx-2'>". "<a class='btn btn-primary' href='".route('post.post-delete-category',$category->term_id)."'>Xóa</a>". "</div>";
                 echo "</div>";
                 unset($categories[$key]);
                 getCategoriesTable($categories, $category->term_id, $char . "ㅤㅤ");
+            }
+        }
+    }
+}
+
+function getCategoriesPost($categories, $parentId = 0, $char = ''){
+    if ($categories) {       
+        foreach ($categories as $key => $category) {
+            $parent = $category->termTaxonomy->parent ?? 0; 
+            if ($parent == $parentId) {
+                echo "<div style='display:flex' class='my-2'>";
+                echo "<div style='width:200px'>". $char."<input id='category-$category->term_id' type='checkbox' name='category[]' value='$category->term_id' /><label for='category-$category->term_id'>".$category->name. "</label></div>";               
+                echo "</div>";
+                unset($categories[$key]);
+                getCategoriesPost($categories, $category->term_id, $char . "ㅤㅤ");
             }
         }
     }
