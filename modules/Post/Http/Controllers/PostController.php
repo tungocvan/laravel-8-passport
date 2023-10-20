@@ -5,6 +5,7 @@ namespace Modules\Post\Http\Controllers;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Modules\Post\Models\Post;
+use Modules\Post\Models\PostMeta;
 use Modules\Category\Models\Terms;
 // use Modules\Post\Repositories\PostRepository;
 use App\Http\Controllers\Controller;
@@ -25,8 +26,24 @@ class PostController extends Controller
         // $Post=$this->PostRepo->getAll();
         // or user PostRepository
         // $Post = new PostRepository();
-       
-        return getUrlView('post');
+        $allPost = Post::all();
+        $posts = [];
+        // dd($allPost[13]->postMeta[0]->post_id);
+        foreach ($allPost as $key => $post) {                                 
+            if($post->postMeta->count() > 0){              
+                if($post->postMeta[0]->meta_key == '_thumbnail_id'){
+                    $image = $post->postMeta[0]->meta_value;
+                }                
+            }            
+            $itemPost = [
+                'ID' => $post->ID,
+                'title' => $post->post_title,  
+                'image' => $image ?? ''             
+            ];
+            array_push($posts,$itemPost);
+        }
+        dd($posts);
+        return getUrlView('post',compact('allPost'));
     }
     public function add()
     {    
@@ -35,13 +52,37 @@ class PostController extends Controller
     }
     public function postAdd(Request $request)
     {    
-        //dd($request->all());   
+       
         $newPost = new Post;
         $newPost->post_title = $request->title;
         $newPost->post_content = $request->editor1;
         $newPost->post_status = 'publish';      
         $newPost->post_type = 'post';
         $newPost->save();
+        $id = $newPost->ID;
+        $category = $request->category;        
+        if(count($category) > 0){
+            foreach ($category as $value) {
+                $categoryTerm = Terms::find($value);
+                $result = new TermRelationships();
+                $result->object_id = $id;
+                $result->term_taxonomy_id = $categoryTerm->term_id;
+                $result->term_order = 0;
+                $result->save();
+                $newTaxonomy= TermTaxonomy::all()->where('term_id',$value)->first();
+                $newTaxonomy->count = $newTaxonomy->count + 1;
+                $newTaxonomy->save();
+            }
+        }
+
+        if($request->thumnail[0]){
+            $postMeta = new PostMeta;
+            $postMeta->post_id = $id;
+            $postMeta->meta_key = '_thumbnail_id';
+            $postMeta->meta_value = $request->thumnail[0];
+            $postMeta->save();
+        }    
+
         return redirect()->route('post.index')->with('msg', "Đã thêm bài viết thành công");  
     }
     public function postAddCategory(Request $request)
