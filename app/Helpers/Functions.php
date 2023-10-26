@@ -1,7 +1,9 @@
 <?php 
 use Illuminate\Support\Str;
 use Modules\Groups\Models\Groups;
+use Modules\Category\Models\Terms;
 use Illuminate\Support\Facades\Mail;
+use Modules\Category\Models\TermRelationships;
 // use File;
 function send_mail($options){        
     $to = $options['to'] ?? 'tungocvan@gmail.com';    
@@ -321,6 +323,17 @@ function getCategoriesOptions($options)
     }
 }
 
+function getCategoriesByIdPost($id){
+    $TermRelationships = TermRelationships::select('term_taxonomy_id')->where('object_id',$id)->get();
+    $category = [];
+    foreach ($TermRelationships as $key => $value) {                
+        $cateSlug = Terms::select('term_id','slug')->where('term_id',$value->term_taxonomy_id)->first();                                 
+        array_push($category,$cateSlug);
+        
+    }
+    return $category;
+}
+
 function getCategoriesTable($categories, $parentId = 0, $char = '')
 {
     if ($categories) {       
@@ -339,17 +352,55 @@ function getCategoriesTable($categories, $parentId = 0, $char = '')
     }
 }
 
-function getCategoriesPost($categories, $parentId = 0, $char = ''){
-    if ($categories) {       
+function getCategoriesPost($options){    
+    if ($options) {       
+        $categories = $options['data'];
+        $parentId = $options['parentId'] ?? 0;
+        $char = $options['char'] ?? '';
+        $checked = $options['checked'] ?? null;        
+        $parentCurrent = $options['parent'] ?? 0;
         foreach ($categories as $key => $category) {
+            $selected = '';
+            if($checked){
+                foreach ($checked as  $check) {
+                     if($check == $category->term_id) {                        
+                         $selected = ' checked ';
+                         break;
+                     }  
+                }
+                  
+            }            
             $parent = $category->termTaxonomy->parent ?? 0; 
             if ($parent == $parentId) {
                 echo "<div style='display:flex' class='my-2'>";
-                echo "<div style='width:200px'>". $char."<input id='category-$category->term_id' type='checkbox' name='category[]' value='$category->term_id' /><label for='category-$category->term_id'>".$category->name. "</label></div>";               
+                echo "<div style='width:200px'>". $char."<input $selected  id='category-$category->term_id' type='checkbox' name='category[]' value='$category->term_id' /><label for='category-$category->term_id'>".$category->name. "</label></div>";               
                 echo "</div>";
                 unset($categories[$key]);
-                getCategoriesPost($categories, $category->term_id, $char . "ㅤㅤ");
+                //getCategoriesPost($categories, $category->term_id, $char . "ㅤㅤ");
+                getCategoriesPost(
+                    [
+                        'data' => $categories,
+                        'parentId' => $category->term_id,
+                        'char' => $char . "ㅤㅤ",
+                        'parent' => $parentCurrent,
+                        'checked' => $checked 
+                    ]
+                );
             }
         }
     }
 }
+// function getCategoriesPost($categories, $parentId = 0, $char = ''){
+//     if ($categories) {       
+//         foreach ($categories as $key => $category) {
+//             $parent = $category->termTaxonomy->parent ?? 0; 
+//             if ($parent == $parentId) {
+//                 echo "<div style='display:flex' class='my-2'>";
+//                 echo "<div style='width:200px'>". $char."<input id='category-$category->term_id' type='checkbox' name='category[]' value='$category->term_id' /><label for='category-$category->term_id'>".$category->name. "</label></div>";               
+//                 echo "</div>";
+//                 unset($categories[$key]);
+//                 getCategoriesPost($categories, $category->term_id, $char . "ㅤㅤ");
+//             }
+//         }
+//     }
+// }

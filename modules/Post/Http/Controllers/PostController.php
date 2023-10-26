@@ -35,14 +35,25 @@ class PostController extends Controller
                     $image = $post->postMeta[0]->meta_value;
                 }                
             }            
+
+            $TermRelationships = TermRelationships::select('term_taxonomy_id')->where('object_id',$post->ID)->get();   
+            //dd($TermRelationships);
+            $category = [];
+            foreach ($TermRelationships as $key => $value) {                
+                $cateSlug = Terms::select('term_id','slug')->where('term_id',$value->term_taxonomy_id)->first();                                 
+                array_push($category,$cateSlug);
+                
+            }
             $itemPost = [
                 'ID' => $post->ID,
                 'title' => $post->post_title,  
-                'image' => $image ?? ''             
+                'image' => $image ?? '',
+                'category' => $category            
             ];
+            
             array_push($posts,$itemPost);
         }
-        dd($posts);
+//        dd($posts);
         return getUrlView('post',compact('allPost'));
     }
     public function add()
@@ -50,6 +61,7 @@ class PostController extends Controller
         $category = Terms::all(); 
         return getUrlView('post/add',compact('category'));    
     }
+   
     public function postAdd(Request $request)
     {    
        
@@ -84,6 +96,111 @@ class PostController extends Controller
         }    
 
         return redirect()->route('post.index')->with('msg', "Đã thêm bài viết thành công");  
+    }
+
+    public function postDelete($id)
+    {    
+          $TermRelationships = TermRelationships::select('term_taxonomy_id')->where('object_id',$id)->get(); 
+          //$termRelationships->delete();  
+          if($TermRelationships->count() > 0 ){
+            foreach ($TermRelationships as $value) {
+                $termTemp= TermRelationships::where('term_taxonomy_id',$value->term_taxonomy_id);
+                $termTemp->delete();
+            }
+          }
+          $postMeta = PostMeta::where('post_id',$id);
+          if($postMeta->count() > 0){
+            $postMeta->delete(); 
+          }
+          $post = Post::where('ID',$id);
+          if($post->count() > 0){
+             $post->delete();              
+             return redirect()->route('post.index')->with('msg', "Đã xóa bài viết thành công"); 
+          }
+          
+          return redirect()->route('post.index')->with('msg', "bài viết không tồn tại"); 
+    }
+    public function postEdit($id)
+    {    
+         // dd($id);
+          //dd(getCategoriesByIdPost($id));          
+          $post = Post::where('ID',$id)->first();          
+          if($post){
+                $checked=[];
+                foreach (getCategoriesByIdPost($id) as $item) {
+                    array_push($checked,$item->term_id);
+                }
+                $postMeta = PostMeta::where('post_id',$id)->where('meta_key','_thumbnail_id')->first();
+                if($postMeta){
+                    //dd($postMeta->meta_value);
+                    $post->avatar = $postMeta->meta_value;
+                }
+                
+                
+                $category = Terms::all();
+               return getUrlView('post/edit',compact('post','category','checked'));
+
+          }
+          return redirect()->route('post.index')->with('msg', "bài viết không tồn tại"); 
+    }
+
+    public function postEditSave($id,Request $request){
+        //dd($request);
+        $updatePost = Post::where('ID',$id); 
+               
+        // $this->PostRepo->update($id,$updatePost);
+        if($updatePost){             
+             $updatePost->update([
+                'post_title' => $request->title,
+                'post_content' =>  $request->editor
+             ]);
+        }
+        $categoryTerm = TermRelationships::select('term_taxonomy_id')->where('object_id',$id)->get()->toArray();
+        
+        $cateOld = [];
+        $category = $request->category;     
+        //dd($categoryTerm);    
+        foreach ($categoryTerm as $key => $value) {        
+            $term_taxonomy_id = (String)$value['term_taxonomy_id'];
+            array_push($cateOld,$term_taxonomy_id);
+            if(!in_array($term_taxonomy_id,$category)){
+                // xoa category
+                //dd($term_taxonomy_id);                
+                $termRelationships= TermRelationships::where('term_taxonomy_id',$term_taxonomy_id);
+                $termRelationships->delete();
+
+            }
+        }        
+        
+        foreach ($category as $value) {
+            if (!in_array($value, $cateOld)) {        
+                 // thêm mới category
+                    $result = new TermRelationships();
+                    $result->object_id = $id;
+                    $result->term_taxonomy_id = $value;
+                    $result->term_order = 0;
+                    $result->save();
+            }
+        }       
+        
+        if($request->thumnail[0]){
+            // $postMeta = new PostMeta;
+            // $postMeta->post_id = $id;
+            // $postMeta->meta_key = '_thumbnail_id';
+            // $postMeta->meta_value = $request->thumnail[0];
+            // $postMeta->save();
+            $postMeta = PostMeta::where('post_id',$id)->where('meta_key','_thumbnail_id');
+            if($postMeta){          
+                //dd($request);                      
+                $postMeta->update([
+                    'meta_value' => $request->thumnail[0]
+                ]);
+            }
+            
+
+        }  
+
+        return redirect()->route('post.index')->with('msg', "Đã cập nhật bài viết thành công"); 
     }
     public function postAddCategory(Request $request)
     {    

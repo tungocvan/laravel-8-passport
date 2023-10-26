@@ -15,15 +15,18 @@
                 <tr>
                   <th class="white-space-nowrap fs--1 align-middle ps-0">ID</th>                  
                   <th class="white-space-nowrap fs--1 align-middle ps-0">Title</th>                                    
-                  <th class="white-space-nowrap fs--1 align-middle ps-0">Content</th>                                    
+                  <th class="white-space-nowrap fs--1 align-middle ps-0">Action</th>                                    
                 </tr>
             </thead>
               <tbody class="list" id="deal-tables-body">
                 @foreach ($posts as $key => $post)    
                     <tr class="hover-actions-trigger btn-reveal-trigger position-static">                        
                         <td class="align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{$post->ID}}</td>                 
-                        <td class="align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{$post->post_title}}</td>                 
-                        <td class="align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{$post->post_content}}</td>                 
+                        <td class="align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{$post->post_title}}</td>                                                          
+                        <td class="align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">
+                            <a class="btn btn-success" href="{{route('post.post-edit',$post->ID)}}">Sửa</a>
+                            <a class="btn btn-danger" href="{{route('post.post-delete',$post->ID)}}">Xóa</a>
+                        </td>                                                          
                     </tr>
                 @endforeach
               </tbody>
