@@ -38,7 +38,9 @@
             </div>
             <div class="col-4">
                 <h4 class="my-4">Chuyên mục</h4>
+                <div class="scrollable-div">
                 {!!getCategoriesPost(['data' => $category,  'parent' => $parent, 'checked' => $checked])!!}
+                </div>
                 <h4 class="my-4">Ảnh đại diện</h4>
                 <x-input-file :options="$options['avatar']" /> 
             </div>

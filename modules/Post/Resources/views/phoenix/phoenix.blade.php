@@ -19,6 +19,14 @@
         />
         <link href="/phoenix/assets/css/app.css" rel="stylesheet" />        
         <script src="/phoenix/assets/js/config.js"></script>
+        <style>
+                .scrollable-div {
+                        width:300px; 
+                        height:300px; 
+                        overflow: auto; /* Hiển thị thanh cuộn khi nội dung vượt quá kích thước của thẻ div */
+                }
+
+        </style>
 @endsection
 @section('jsHead')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>                

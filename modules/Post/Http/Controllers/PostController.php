@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Modules\Post\Models\Post;
 use Modules\Post\Models\PostMeta;
 use Modules\Category\Models\Terms;
-// use Modules\Post\Repositories\PostRepository;
+use Modules\Post\Repositories\PostRepository;
 use App\Http\Controllers\Controller;
 use Modules\Category\Models\TermTaxonomy;
 use Modules\Category\Models\TermRelationships;
@@ -24,9 +24,10 @@ class PostController extends Controller
     public function index()
     {
         // $Post=$this->PostRepo->getAll();
-        // or user PostRepository
-        // $Post = new PostRepository();
-        $allPost = Post::all();
+        // or user PostRepository 
+        $Post = new PostRepository();
+        
+        $allPost = $Post->getPaginate(3);
         $posts = [];
         // dd($allPost[13]->postMeta[0]->post_id);
         foreach ($allPost as $key => $post) {                                 

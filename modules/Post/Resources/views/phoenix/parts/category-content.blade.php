@@ -28,7 +28,7 @@
                 <div class="d-sm-flex justify-content-between mt-4">
                     <h4 class="mb-4">Thêm chuyên mục</h4>                       
                 </div>
-                <hr />
+                <hr /> 
                     <form method="POST" action="{{ route('post.post-add-category') }}">
                     @csrf
                 <x-input-text :options="$options['name']"/> 

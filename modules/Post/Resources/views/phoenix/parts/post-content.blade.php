@@ -32,4 +32,7 @@
               </tbody>
         </table>
     </div>
-</div> 
+    <div class="pagination  mt-4 justify-content-end">
+        {{$posts->links()}}
+    </div>
+</div>  
