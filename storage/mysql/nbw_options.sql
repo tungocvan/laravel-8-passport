@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: localhost:3306
--- Thời gian đã tạo: Th10 19, 2023 lúc 11:37 PM
+-- Thời gian đã tạo: Th10 02, 2023 lúc 02:21 AM
 -- Phiên bản máy phục vụ: 5.6.41-84.1
 -- Phiên bản PHP: 7.4.33
 
@@ -19,37 +19,38 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `nhathhmd_hmd`
+-- Cơ sở dữ liệu: `nhathhmd_hmdpharma`
 --
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `nbw_postmeta`
+-- Cấu trúc bảng cho bảng `nbw_options`
 --
 
-CREATE TABLE IF NOT EXISTS `nbw_postmeta` (
-  `meta_id` bigint(20) UNSIGNED NOT NULL,
-  `post_id` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `meta_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_value` longtext COLLATE utf8mb4_unicode_ci
+CREATE TABLE IF NOT EXISTS `nbw_options` (
+  `option_id` bigint(20) UNSIGNED NOT NULL,
+  `option_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `option_value` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `autoload` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'yes'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
-ALTER TABLE `nbw_postmeta`
-  ADD PRIMARY KEY (`meta_id`),
-  ADD KEY `post_id` (`post_id`),
-  ADD KEY `meta_key` (`meta_key`(191));
+--
+ALTER TABLE `nbw_options`
+  ADD PRIMARY KEY (`option_id`),
+  ADD UNIQUE KEY `option_name` (`option_name`),
+  ADD KEY `autoload` (`autoload`);
 
 --
 -- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT cho bảng `nbw_postmeta`
+-- AUTO_INCREMENT cho bảng `nbw_options`
 --
-ALTER TABLE `nbw_postmeta`
-  MODIFY `meta_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+ALTER TABLE `nbw_options`
+  MODIFY `option_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

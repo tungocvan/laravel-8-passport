@@ -24,6 +24,10 @@ class AppServiceProvider extends ServiceProvider
     {
         //singleton
 	$this->app->singleton(
+		\Modules\Option\Repositories\OptionRepositoryInterface::class,
+		\Modules\Option\Repositories\OptionRepository::class,
+		);
+	$this->app->singleton(
 		\Modules\Category\Repositories\CategoryRepositoryInterface::class,
 		\Modules\Category\Repositories\CategoryRepository::class,
 		);

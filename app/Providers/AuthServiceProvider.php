@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use Modules\Option\Models\Option;
+use Modules\Option\Policies\OptionPolicy;
+
+
 use Modules\Category\Models\Category;
 use Modules\Category\Policies\CategoryPolicy;
 
@@ -29,6 +33,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
+		Option::class => OptionPolicy::class,
 		Category::class => CategoryPolicy::class,
 		Users::class => UsersPolicy::class,
 		Groups::class => GroupsPolicy::class,

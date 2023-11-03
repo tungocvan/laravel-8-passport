@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Modules\Product\Models\Product;
 use Modules\Product\Repositories\ProductRepositoryInterface;
 // use Modules\Product\Repositories\ProductRepository;
+use Modules\Category\Models\Terms;
+use Modules\Category\Models\TermTaxonomy;
 class ProductController extends Controller
 {  
     protected $ProductRepo;
@@ -29,6 +31,15 @@ class ProductController extends Controller
     }
     public function category()
     {    
+        //$type = 'product_cat';
+        $type = 'category';
+        //$data = Terms::all();  
+        $category = Terms::all();     
+        //$category = TermTaxonomy::join('nbw_terms', 'nbw_term_taxonomy.term_id', '=', 'nbw_terms.term_id')->where('taxonomy', $type)->pluck('name','nbw_terms.term_id');   
+        //$category = TermTaxonomy::join('nbw_terms', 'nbw_term_taxonomy.term_id', '=', 'nbw_terms.term_id')->where('taxonomy', $type)->pluck('name','nbw_terms.term_id');   
+        dd($category);
+        //dd($data[0]->termTaxonomy);                  
+        //return getUrlView('post/category',compact('data','category'));  
         return getUrlView('product/category');    
     }
     public function tags()

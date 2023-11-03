@@ -13,7 +13,7 @@ class ImportFileSql extends Command
      *
      * @var string
      */
-    protected $signature = 'import:filesql {name}';
+    protected $signature = 'import:filesql {name} {--directory}';
 
     /**
      * The console command description.
@@ -39,23 +39,49 @@ class ImportFileSql extends Command
      */
     public function handle()
     {
+        $option = $this->option('directory');
         $file = $this->argument('name');
-        // Kiểm tra file SQL có tồn tại hay không
-        $sql_file = storage_path().'/mysql//'.$file;
-        if(!file_exists($sql_file)){
-            $this->info("kiểm tra không có file $file có nằm trong storage");            
-        }else{
-            // Lấy nội dung của file SQL
-                $sql_content = file_get_contents($sql_file);
-
-                // Thực thi các câu lệnh SQL từ file
-                try {
-                    DB::unprepared($sql_content);
-                    $this->info('import sql thành công');                     
-                } catch (Exception $e) {
-                    return "Error importing file: " . $e->getMessage();
+        if($option){
+            $directory = storage_path().'/'.$file;
+            $files = scandir($directory);
+            foreach ($files as $file) {
+                if ($file != '.' && $file != '..') {  
+                    $sql_file = $directory.'/'.$file;                                        
+                     if(file_exists($sql_file)){
+                            //echo $sql_file . "\n";
+                        $sql_content = file_get_contents($sql_file);    
+                        // Thực thi các câu lệnh SQL từ file
+                        try {
+                            DB::unprepared($sql_content);
+                            $this->info('import sql thành công');                     
+                        } catch (Exception $e) {
+                            return "Error importing file: " . $e->getMessage();
+                        } 
+                     }
                 }
+            }
+            $this->info('importFileSql tạo thành công - '.$directory);  
+        }else{
+            // Kiểm tra file SQL có tồn tại hay không
+            $sql_file = storage_path().'/mysql//'.$file;
+            if(!file_exists($sql_file)){
+                $this->info("kiểm tra không có file $file có nằm trong storage");            
+            }else{
+                // Lấy nội dung của file SQL
+                    $sql_content = file_get_contents($sql_file);
+
+                    // Thực thi các câu lệnh SQL từ file
+                    try {
+                        DB::unprepared($sql_content);
+                        $this->info('import sql thành công');                     
+                    } catch (Exception $e) {
+                        return "Error importing file: " . $e->getMessage();
+                    }
+            }
+            //$this->info('importFileSql tạo thành công');  
         }
-        //$this->info('importFileSql tạo thành công');    
+
+        
+          
     }
 }

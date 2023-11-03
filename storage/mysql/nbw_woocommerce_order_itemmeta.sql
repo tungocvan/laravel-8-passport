@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: localhost:3306
--- Thời gian đã tạo: Th10 19, 2023 lúc 11:37 PM
+-- Thời gian đã tạo: Th10 02, 2023 lúc 02:22 AM
 -- Phiên bản máy phục vụ: 5.6.41-84.1
 -- Phiên bản PHP: 7.4.33
 
@@ -19,36 +19,41 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `nhathhmd_hmd`
+-- Cơ sở dữ liệu: `nhathhmd_hmdpharma`
 --
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `nbw_postmeta`
+-- Cấu trúc bảng cho bảng `nbw_woocommerce_order_itemmeta`
 --
 
-CREATE TABLE IF NOT EXISTS `nbw_postmeta` (
+CREATE TABLE IF NOT EXISTS `nbw_woocommerce_order_itemmeta` (
   `meta_id` bigint(20) UNSIGNED NOT NULL,
-  `post_id` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `order_item_id` bigint(20) UNSIGNED NOT NULL,
   `meta_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `meta_value` longtext COLLATE utf8mb4_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
-ALTER TABLE `nbw_postmeta`
+--
+
+--
+-- Chỉ mục cho bảng `nbw_woocommerce_order_itemmeta`
+--
+ALTER TABLE `nbw_woocommerce_order_itemmeta`
   ADD PRIMARY KEY (`meta_id`),
-  ADD KEY `post_id` (`post_id`),
-  ADD KEY `meta_key` (`meta_key`(191));
+  ADD KEY `order_item_id` (`order_item_id`),
+  ADD KEY `meta_key` (`meta_key`(32));
 
 --
 -- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT cho bảng `nbw_postmeta`
+-- AUTO_INCREMENT cho bảng `nbw_woocommerce_order_itemmeta`
 --
-ALTER TABLE `nbw_postmeta`
+ALTER TABLE `nbw_woocommerce_order_itemmeta`
   MODIFY `meta_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 COMMIT;
 

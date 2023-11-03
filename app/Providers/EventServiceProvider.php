@@ -1,5 +1,7 @@
 <?php
 namespace App\Providers;
+use Modules\Option\Models\Option;
+use Modules\Option\Observers\OptionObserver;
 use Modules\Category\Models\Category;
 use Modules\Category\Observers\CategoryObserver;
 use Modules\Groups\Models\Groups;
@@ -57,6 +59,7 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         //observe
+		Option::observe(new OptionObserver);
 		Category::observe(new CategoryObserver);
 		Groups::observe(new GroupsObserver);
 		Modules::observe(new ModulesObserver);

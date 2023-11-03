@@ -98,7 +98,7 @@ class PostController extends Controller
 
         return redirect()->route('post.index')->with('msg', "Đã thêm bài viết thành công");  
     }
-
+ 
     public function postDelete($id)
     {    
           $TermRelationships = TermRelationships::select('term_taxonomy_id')->where('object_id',$id)->get(); 
@@ -282,8 +282,12 @@ class PostController extends Controller
     }
     public function category()
     {    
+        
         $data = Terms::all();  
-        $category = Terms::all();        
+        $category = Terms::all();     
+        //$type = 'category';   
+        //$category = TermTaxonomy::join('nbw_terms', 'nbw_term_taxonomy.term_id', '=', 'nbw_terms.term_id')->where('taxonomy', $type)->pluck('name','nbw_terms.term_id');
+        //$data = TermTaxonomy::join('nbw_terms', 'nbw_term_taxonomy.term_id', '=', 'nbw_terms.term_id')->where('taxonomy', $type)->pluck('name','nbw_terms.term_id');
         //dd($data[0]->termTaxonomy);                  
         return getUrlView('post/category',compact('data','category'));    
     }
