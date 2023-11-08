@@ -55,7 +55,9 @@
                       
                 </div>
                 <hr />
-                {{ getCategoriesTable($data['data']) }} 
+                <div class="scrollable-div">
+                    {!!getCategories(['data' => $data['data'],  'parent' => $parent])!!}
+                 </div>
             </div>            
         </div>
     </div>

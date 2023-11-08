@@ -352,7 +352,7 @@ function getCategoriesTable($categories, $parentId = 0, $char = '')
     }
 }
 
-function getCategoriesPost($options){    
+function getCategoriesProduct($options){    
     if ($options) {       
         $categories = $options['data'];
         $parentId = $options['parentId'] ?? 0;
@@ -370,14 +370,17 @@ function getCategoriesPost($options){
                 }
                   
             }            
-            $parent = $category->termTaxonomy->parent ?? 0; 
+            //$parent = $category->termTaxonomy->parent ?? 0; 
+            $parent = $category->parent ?? 0; 
             if ($parent == $parentId) {
                 echo "<div style='display:flex' class='my-2'>";
-                echo "<div style='width:200px'>". $char."<input $selected  id='category-$category->term_id' type='checkbox' name='category[]' value='$category->term_id' /><label for='category-$category->term_id'>".$category->name. "</label></div>";               
+                echo "<div style='width:290px'>". $char."<input $selected  id='category-$category->term_id' type='checkbox' name='category[]' value='$category->term_id' /><label for='category-$category->term_id'>".$category->name. "</label>                
+                <a href='".route('product.product-edit-category',$category->term_id)."'>Sửa </a><a href='".route('product.product-delete-category',$category->term_id)."'>Xóa </a>
+                </div>";               
                 echo "</div>";
                 unset($categories[$key]);
                 //getCategoriesPost($categories, $category->term_id, $char . "ㅤㅤ");
-                getCategoriesPost(
+                getCategoriesProduct(
                     [
                         'data' => $categories,
                         'parentId' => $category->term_id,
@@ -390,6 +393,86 @@ function getCategoriesPost($options){
         }
     }
 }
+function getCategories($options){    
+    if ($options) {       
+        $categories = $options['data'];
+        $parentId = $options['parentId'] ?? 0;
+        $char = $options['char'] ?? '';
+        $checked = $options['checked'] ?? null;        
+        $parentCurrent = $options['parent'] ?? 0;
+        foreach ($categories as $key => $category) {
+            $selected = '';
+            if($checked){
+                foreach ($checked as  $check) {
+                     if($check == $category->term_id) {                        
+                         $selected = ' checked ';
+                         break;
+                     }  
+                }
+                  
+            }            
+            //$parent = $category->termTaxonomy->parent ?? 0; 
+            $parent = $category->parent ?? 0; 
+            if ($parent == $parentId) {
+                echo "<div style='display:flex' class='my-2'>";
+                echo "<div style='width:290px'>". $char."<input $selected  id='category-$category->term_id' type='checkbox' name='category[]' value='$category->term_id' /><label for='category-$category->term_id'>".$category->name. "</label>                
+                <a href='".route('post.post-edit-category',$category->term_id)."'>Sửa </a><a href='".route('post.post-delete-category',$category->term_id)."'>Xóa </a>
+                </div>";               
+                echo "</div>";
+                unset($categories[$key]);
+                //getCategoriesPost($categories, $category->term_id, $char . "ㅤㅤ");
+                getCategories(
+                    [
+                        'data' => $categories,
+                        'parentId' => $category->term_id,
+                        'char' => $char . "ㅤㅤ",
+                        'parent' => $parentCurrent,
+                        'checked' => $checked 
+                    ]
+                );
+            }
+        }
+    }
+}
+// function getCategoriesPost($options){    
+//     if ($options) {       
+//         $categories = $options['data'];
+//         $parentId = $options['parentId'] ?? 0;
+//         $char = $options['char'] ?? '';
+//         $checked = $options['checked'] ?? null;        
+//         $parentCurrent = $options['parent'] ?? 0;
+//         foreach ($categories as $key => $category) {
+//             $selected = '';
+//             if($checked){
+//                 foreach ($checked as  $check) {
+//                      if($check == $category->term_id) {                        
+//                          $selected = ' checked ';
+//                          break;
+//                      }  
+//                 }
+                  
+//             }            
+//             //$parent = $category->termTaxonomy->parent ?? 0; 
+//             $parent = $category->parent ?? 0; 
+//             if ($parent == $parentId) {
+//                 echo "<div style='display:flex' class='my-2'>";
+//                 echo "<div style='width:200px'>". $char."<input $selected  id='category-$category->term_id' type='checkbox' name='category[]' value='$category->term_id' /><label for='category-$category->term_id'>".$category->name. "</label></div>";               
+//                 echo "</div>";
+//                 unset($categories[$key]);
+//                 //getCategoriesPost($categories, $category->term_id, $char . "ㅤㅤ");
+//                 getCategoriesPost(
+//                     [
+//                         'data' => $categories,
+//                         'parentId' => $category->term_id,
+//                         'char' => $char . "ㅤㅤ",
+//                         'parent' => $parentCurrent,
+//                         'checked' => $checked 
+//                     ]
+//                 );
+//             }
+//         }
+//     }
+// }
 // function getCategoriesPost($categories, $parentId = 0, $char = ''){
 //     if ($categories) {       
 //         foreach ($categories as $key => $category) {

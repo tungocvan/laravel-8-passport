@@ -16,4 +16,4 @@
      Route::get('/tags', [PostController::class, 'tags'])->name('tags');
 });
 
-  
+   

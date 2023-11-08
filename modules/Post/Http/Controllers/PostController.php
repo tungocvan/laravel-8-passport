@@ -59,7 +59,11 @@ class PostController extends Controller
     }
     public function add()
     {    
-        $category = Terms::all(); 
+        //$category = Terms::all(); 
+        $type = 'category';        
+        
+        $category = TermTaxonomy::join('nbw_terms', 'nbw_term_taxonomy.term_id', '=', 'nbw_terms.term_id')->where('taxonomy', $type)->select('nbw_terms.*','description','parent','count')->get();                
+        //dd($category);
         return getUrlView('post/add',compact('category'));    
     }
    
@@ -268,27 +272,33 @@ class PostController extends Controller
     }
     public function postCategoryEdit($id){
         //dd($id);
-        $data = Terms::all();  
-        $category = Terms::all();        
+        // $data = Terms::all();  
+        $type = 'category';        
+        $category = TermTaxonomy::join('nbw_terms', 'nbw_term_taxonomy.term_id', '=', 'nbw_terms.term_id')->where('taxonomy', $type)->select('nbw_terms.*','description','parent','count')->get();        
+        $data = TermTaxonomy::join('nbw_terms', 'nbw_term_taxonomy.term_id', '=', 'nbw_terms.term_id')->where('taxonomy', $type)->select('nbw_terms.*','description','parent','count')->get();                         
+        // $category = Terms::all();        
         $editData = $data->where('term_id',$id);                    
         foreach ($editData as $key => $value) {
             $key = $key; // Sẽ in ra 6
             break; // Dừng sau khi lấy được chỉ số đầu tiên
         }        
-        $description=$data[$key]->termTaxonomy->description;       
-        $parent = $data[$key]->termTaxonomy->parent;                                 
+        $description=$data[$key]->description;       
+        $parent = $data[$key]->parent;                                 
         //dd($editData);
         return getUrlView('post/category',compact('data','category','editData','description','parent','key'));
     }
     public function category()
     {    
         
-        $data = Terms::all();  
-        $category = Terms::all();     
+        // $data = Terms::all();  
+        // $category = Terms::all();     
         //$type = 'category';   
         //$category = TermTaxonomy::join('nbw_terms', 'nbw_term_taxonomy.term_id', '=', 'nbw_terms.term_id')->where('taxonomy', $type)->pluck('name','nbw_terms.term_id');
         //$data = TermTaxonomy::join('nbw_terms', 'nbw_term_taxonomy.term_id', '=', 'nbw_terms.term_id')->where('taxonomy', $type)->pluck('name','nbw_terms.term_id');
-        //dd($data[0]->termTaxonomy);                  
+        //dd($data[0]->termTaxonomy); 
+        $type = 'category';        
+        $category = TermTaxonomy::join('nbw_terms', 'nbw_term_taxonomy.term_id', '=', 'nbw_terms.term_id')->where('taxonomy', $type)->select('nbw_terms.*','description','parent','count')->get();        
+        $data = TermTaxonomy::join('nbw_terms', 'nbw_term_taxonomy.term_id', '=', 'nbw_terms.term_id')->where('taxonomy', $type)->select('nbw_terms.*','description','parent','count')->get();                         
         return getUrlView('post/category',compact('data','category'));    
     }
     public function tags()

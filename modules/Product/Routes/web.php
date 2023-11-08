@@ -5,8 +5,14 @@
      Route::get('/', [ProductController::class, 'index'])->name('index');
      Route::get('/add', [ProductController::class, 'add'])->name('add');
      Route::get('/category', [ProductController::class, 'category'])->name('category');
+     Route::post('/addCategory', [ProductController::class, 'productAddCategory'])->name('product-add-category');
+
+     Route::post('/addCategory', [ProductController::class, 'productAddCategory'])->name('product-add-category');
+     Route::get('/edit/{id}', [ProductController::class, 'productCategoryEdit'])->name('product-edit-category');
+     Route::get('/delete/{id}', [ProductController::class, 'productCategoryDelete'])->name('product-delete-category');
+
      Route::get('/tags', [ProductController::class, 'tags'])->name('tags');
      Route::get('/attributes', [ProductController::class, 'attributes'])->name('attributes');
 });
 
- 
+  
