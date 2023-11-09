@@ -16,6 +16,6 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
     }
     public function getPaginate($number)
     {
-        return $this->model->paginate($number);
+        return $this->model->where('post_type','post')->paginate($number);
     }
 } 

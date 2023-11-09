@@ -14,4 +14,8 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     {
         return $this->model->all();
     }
+    public function getPaginate($number)
+    {
+        return $this->model->where('post_type','product')->paginate($number);
+    }
 }

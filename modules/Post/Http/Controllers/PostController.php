@@ -30,7 +30,8 @@ class PostController extends Controller
         $allPost = $Post->getPaginate(3);
         $posts = [];
         // dd($allPost[13]->postMeta[0]->post_id);
-        foreach ($allPost as $key => $post) {                                 
+        foreach ($allPost as $key => $post) {               
+
             if($post->postMeta->count() > 0){              
                 if($post->postMeta[0]->meta_key == '_thumbnail_id'){
                     $image = $post->postMeta[0]->meta_value;
@@ -50,14 +51,14 @@ class PostController extends Controller
                 'title' => $post->post_title,  
                 'image' => $image ?? '',
                 'category' => $category            
-            ];
-            
+            ];            
             array_push($posts,$itemPost);
+            
         }
 //        dd($posts);
         return getUrlView('post',compact('allPost'));
     }
-    public function add()
+    public function add() 
     {    
         //$category = Terms::all(); 
         $type = 'category';        

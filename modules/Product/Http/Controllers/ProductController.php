@@ -3,10 +3,12 @@
 namespace Modules\Product\Http\Controllers;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Modules\Post\Models\Post;
+use Modules\Post\Models\PostMeta;
 use Modules\Category\Models\Terms;
+use Modules\Product\Repositories\ProductRepository;
 use Modules\Product\Models\Product;
 use App\Http\Controllers\Controller;
-// use Modules\Product\Repositories\ProductRepository;
 use Modules\Category\Models\TermTaxonomy;
 use Modules\Category\Models\TermRelationships;
 use Modules\Product\Repositories\ProductRepositoryInterface;
@@ -21,16 +23,122 @@ class ProductController extends Controller
     }
     public function index()
     {
-        // $Post=$this->PostRepo->getAll();
-        // or user PostRepository
-        // $Post = new PostRepository();
-        
-        return getUrlView('product');
+        $Post = new ProductRepository();        
+        $allPost = $Post->getPaginate(3);
+        //dd($allPost);
+        $posts = [];
+        // dd($allPost[13]->postMeta[0]->post_id);
+        foreach ($allPost as $key => $post) {               
+            // if($post->postMeta){              
+            //     if($post->postMeta[0]->meta_key == '_thumbnail_id'){
+            //         $image = $post->postMeta[0]->meta_value;
+            //     }        
+            //     if($post->postMeta[0]->meta_key == '_price'){
+            //         $price = $post->postMeta[0]->meta_value;
+            //     }        
+
+            // }            
+
+            $postMeta = PostMeta::where('post_id',$post->ID)->get();     
+            
+            if($postMeta->count() > 0){ 
+                foreach ($postMeta as $key => $post) { 
+                    if($post->meta_key == '_thumbnail_id'){
+                        $image = $post->meta_value;
+                    }
+                    if($post->meta_key == '_price'){
+                        $price = $post->meta_value;
+                    }
+                    if($post->meta_key == '_regular_price'){
+                        $regular_price = $post->meta_value;
+                    }
+
+                }
+            }
+            
+            $TermRelationships = TermRelationships::select('term_taxonomy_id')->where('object_id',$post->ID)->get();   
+            //dd($TermRelationships);
+            $category = [];
+            foreach ($TermRelationships as $key => $value) {                
+                $cateSlug = Terms::select('term_id','slug')->where('term_id',$value->term_taxonomy_id)->first();                                 
+                array_push($category,$cateSlug);
+                
+            }
+            $itemPost = [
+                'ID' => $post->ID,
+                'title' => $post->post_title,  
+                'image' => $image ?? '',
+                'category' => $category,
+                'price' => $price,
+                'regular_price' => $regular_price,
+            ];            
+            array_push($posts,$itemPost);
+            
+        }
+        dd($posts);
+        return getUrlView('product',compact('allPost'));
     }
     public function add()
     {    
-        return getUrlView('product/add');    
+        $type = 'product_cat';
+        $category = TermTaxonomy::join('nbw_terms', 'nbw_term_taxonomy.term_id', '=', 'nbw_terms.term_id')->where('taxonomy', $type)->select('nbw_terms.*','description','parent','count')->get();                
+        return getUrlView('product/add',compact('category'));    
     }
+
+    public function productAdd(Request $request)
+    {    
+       
+        //dd($request['_price']);
+        $newPost = new Post;
+        $newPost->post_title = $request->post_title;
+        $newPost->post_excerpt = $request->post_excerpt;
+        $newPost->post_content = $request->post_content;
+        $newPost->post_status = 'publish';      
+        $newPost->post_type = 'product';
+        $price = $request->_price ?? 0;
+        $regular_price = $request->_regular_price ?? 0;        
+        $newPost->save();
+        $id = $newPost->ID;
+        $category = $request->category;        
+        if(count($category) > 0){
+            foreach ($category as $value) {
+                $categoryTerm = Terms::find($value);
+                $result = new TermRelationships();
+                $result->object_id = $id;
+                $result->term_taxonomy_id = $categoryTerm->term_id;
+                $result->term_order = 0;
+                $result->save();
+                $newTaxonomy= TermTaxonomy::all()->where('term_id',$value)->first();
+                $newTaxonomy->count = $newTaxonomy->count + 1;
+                $newTaxonomy->save();
+            }
+        }
+
+        if($request->thumnail[0]){
+            $postMeta = new PostMeta;
+            $postMeta->post_id = $id;
+            $postMeta->meta_key = '_thumbnail_id';
+            $postMeta->meta_value = $request->thumnail[0];
+            $postMeta->save();
+        }    
+
+       
+        $postMeta = new PostMeta;
+        $postMeta->post_id = $id;
+        $postMeta->meta_key = '_price';
+        $postMeta->meta_value = $price ;
+        $postMeta->save();
+
+        
+        $postMeta = new PostMeta;
+        $postMeta->post_id = $id;
+        $postMeta->meta_key = '_regular_price';
+        $postMeta->meta_value = $regular_price ;
+        $postMeta->save();
+
+        return redirect()->route('product.index')->with('msg', "Đã thêm sản phẩm thành công");  
+    }
+
     public function category()
     {    
         $type = 'product_cat';

@@ -1,7 +1,7 @@
 @php
-  $styleBasic = $options['style'] ?? false;
-  $id = $options['id'] ?? 'editor1';
+  $styleBasic = $options['style'] ?? false;    
   $name = $options['name'] ?? $id;
+  $id = $options['id'] ?? $name ;
   $row = $options['rows'] ?? 10;
   $cols =$options['cols'] ?? 80;
   $content = $options['content'] ?? 'Ckeditor' ;
@@ -12,10 +12,10 @@
     </textarea>
 </div>
 
-@section('jsHead') 
+{{-- @section('jsHead') 
   @parent
-  {{-- <script src="/plugin/ckeditor/ckeditor.js"></script> --}}
-@endsection
+  <script src="/plugin/ckeditor/ckeditor.js"></script>
+@endsection --}}
 
 
 @if($styleBasic)
@@ -23,7 +23,7 @@
   // Replace the <textarea id="editor1"> with a CKEditor 4
   // instance, using default configuration.
   // https://ckeditor.com/docs/ckeditor4/latest/examples/removeformat.html
-  CKEDITOR.replace( {{ $options['id'] ?? 'editor1' }},{
+  CKEDITOR.replace( {{ $id }},{
     // removeButtons: '',
     // removeButtons: 'PasteFromWord',     
     toolbarGroups: [{
@@ -39,7 +39,7 @@
   // Replace the <textarea id="editor1"> with a CKEditor 4
   // instance, using default configuration.
   // https://ckeditor.com/docs/ckeditor4/latest/examples/removeformat.html
-  CKEDITOR.replace( {{ $options['id'] ?? 'editor1' }},{
+  CKEDITOR.replace( {{ $id }},{
     
   } );
 </script>
