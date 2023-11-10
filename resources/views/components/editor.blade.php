@@ -1,6 +1,7 @@
 @php
   $styleBasic = $options['style'] ?? false;    
-  $name = $options['name'] ?? $id;
+  $number = (string) rand(100,999);
+  $name = $options['name'] ?? 'name_'.$number;
   $id = $options['id'] ?? $name ;
   $row = $options['rows'] ?? 10;
   $cols =$options['cols'] ?? 80;

@@ -324,7 +324,7 @@ function getCategoriesOptions($options)
 }
 
 function getCategoriesByIdPost($id){
-    $TermRelationships = TermRelationships::select('term_taxonomy_id')->where('object_id',$id)->get();
+    $TermRelationships = TermRelationships::select('term_taxonomy_id')->where('object_id',$id)->get();        
     $category = [];
     foreach ($TermRelationships as $key => $value) {                
         $cateSlug = Terms::select('term_id','slug')->where('term_id',$value->term_taxonomy_id)->first();                                 
